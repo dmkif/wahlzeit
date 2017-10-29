@@ -1,0 +1,101 @@
+/*
+ * Autor: Daniel Mulzer
+ *
+ * Date: 29.10.2017
+ *
+ * Version: adap-cw03
+ *
+ * Class: LocationTest
+ *
+ * This file is part of the Wahlzeit photo rating application.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+package org.wahlzeit.model;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+/**
+ * @author dmkif
+ *
+ */
+public class LocationTest {
+
+    /**
+     * Test method for {@link org.wahlzeit.model.Location#Location(org.wahlzeit.model.Coordinate)}.
+     */
+    @Test
+    public void testLocation() {
+	assertNotNull(new Location(new Coordinate(0,0,0)));
+	assertNotNull(new Location(null));
+    }
+
+    /**
+     * Test method for {@link org.wahlzeit.model.Location#getCoordinate()}.
+     */
+    @Test
+    public void testGetCoordinate() {
+	Coordinate testCoordinate = new Coordinate(0,0,0);
+	Location withZeroPointCoordinateLocation = new Location(testCoordinate);
+	Location withNullCoordinateLocation = new Location(null);
+	
+	assertSame(testCoordinate, withZeroPointCoordinateLocation.getCoordinate());
+	assertNull(withNullCoordinateLocation.getCoordinate());
+	assertNotSame(testCoordinate, withNullCoordinateLocation.getCoordinate());
+    }
+
+    /**
+     * Test method for {@link org.wahlzeit.model.Location#setCoordinate(org.wahlzeit.model.Coordinate)}.
+     */
+    @Test
+    public void testSetCoordinate() {
+	Coordinate testCoordinate = new Coordinate(0,0,0);
+	Location testLocation = new Location(testCoordinate);
+	
+	assertSame(testCoordinate, testLocation.getCoordinate());
+	assertTrue(testLocation.getCoordinate().equals(testCoordinate));
+	
+	testLocation.setCoordinate(null);
+	assertNull(testLocation.getCoordinate());
+	assertNotSame(testCoordinate, testLocation.getCoordinate());
+	
+	testLocation.setCoordinate(testCoordinate);
+	assertSame(testCoordinate, testLocation.getCoordinate());
+	assertTrue(testLocation.getCoordinate().equals(testCoordinate));
+	
+    }
+
+    /**
+     * Test method for {@link org.wahlzeit.model.Location#equals(java.lang.Object)}.
+     */
+    @Test
+    public void testEqualsObject() {
+	Coordinate testCoordinate = new Coordinate(0,0,0);
+	Location firstTestLocation = new Location(testCoordinate);
+	Location secondTestLocation = new Location(testCoordinate);
+	
+	assertTrue(firstTestLocation.equals(secondTestLocation));
+	
+	secondTestLocation.setCoordinate(new Coordinate(1,1,1));
+	assertFalse(firstTestLocation.equals(secondTestLocation));
+	
+	firstTestLocation.setCoordinate(new Coordinate(1,1,1));
+	assertTrue(firstTestLocation.equals(secondTestLocation));
+	
+    }
+
+}
