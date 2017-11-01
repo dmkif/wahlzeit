@@ -27,7 +27,10 @@
  */
 package org.wahlzeit.model;
 
+import java.util.Objects;
+
 public class Coordinate {
+    private static final double DELTA = 0.00001;
     private double x;
 
     private double y;
@@ -68,9 +71,17 @@ public class Coordinate {
     }
     public boolean isEqual(Coordinate cord) {
 	if (cord != null) {
-	    return this.x == cord.x && this.y == cord.y && this.z == cord.z;
+	    
+	    return Math.abs(this.x - cord.x) < DELTA
+		    && Math.abs(this.y - cord.y) < DELTA 
+		    && Math.abs(this.z - cord.z) < DELTA;
 	}
 	return false;
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.x, this.y, this.z);
     }
 
 }

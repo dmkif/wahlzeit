@@ -72,9 +72,12 @@ public class CoordinateTest {
 	public void testIsEqual() {
 		assertTrue(firstTestCoordinate.isEqual(firstTestCoordinate));
 		assertTrue(firstTestCoordinate.isEqual(new Coordinate(0,0,0)));
+		assertTrue(firstTestCoordinate.isEqual(new Coordinate(DELTA/10,DELTA/10,DELTA/10)));
 		assertFalse(secondTestCoordinate.isEqual(firstTestCoordinate));
 		assertFalse(secondTestCoordinate.isEqual(new Coordinate(1,1,1)));
 		assertFalse(firstTestCoordinate.isEqual(null));
+		assertFalse(firstTestCoordinate.isEqual(new Coordinate(DELTA,DELTA,DELTA)));
+		
 	}
 	
 	@Test
@@ -113,6 +116,13 @@ public class CoordinateTest {
 	    assertEquals(0, firstTempTestCoordinate.getZ(),DELTA);
 	    firstTempTestCoordinate = new Coordinate(0, 0, TESTVALUE);
 	    assertEquals(TESTVALUE, firstTempTestCoordinate.getZ(), DELTA);
+	}
+	
+	public void testHashCode() {
+	    assertEquals(firstTestCoordinate.hashCode(), (new Coordinate(firstTestCoordinate.getX(), 
+		    							 firstTestCoordinate.getY(),
+		    							 firstTestCoordinate.getZ()).hashCode()));
+	    assertNotEquals(firstTestCoordinate.hashCode(), secondTestCoordinate.hashCode());
 	}
 
 }

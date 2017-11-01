@@ -97,5 +97,14 @@ public class LocationTest {
 	assertTrue(firstTestLocation.equals(secondTestLocation));
 	
     }
+    
+    public void testHashCode() {
+	Coordinate testCoordinate = new Coordinate(0,0,0);
+	Location firstTestLocation = new Location(testCoordinate);
+	Location secondTestLocation = new Location(testCoordinate);
+	
+	    assertEquals(firstTestLocation.hashCode(), (new Location(testCoordinate).hashCode()));
+	    assertNotEquals(firstTestLocation.hashCode(), secondTestLocation.hashCode());
+	}
 
 }

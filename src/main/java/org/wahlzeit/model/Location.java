@@ -25,6 +25,8 @@
  */
 package org.wahlzeit.model;
 
+import java.util.Objects;
+
 /**
  * @author dmkif
  *
@@ -57,6 +59,11 @@ public class Location {
 	    return this.coordinate.equals(((Location) obj).getCoordinate());
 	}
 	return false;
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getCoordinate());
     }
 
 }
