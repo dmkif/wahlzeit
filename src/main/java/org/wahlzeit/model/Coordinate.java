@@ -1,5 +1,4 @@
 
-
 /*
  * Autor: Daniel Mulzer
  *
@@ -52,10 +51,10 @@ public class Coordinate {
     }
 
     public double getDistance(Coordinate coord) {
-
-	return Math.sqrt(Math.pow(this.x - coord.x, 2) 
-		+ Math.pow(this.y - coord.y, 2) 
-		+ Math.pow(this.z - coord.z, 2));
+	short exponent = 2;
+	return Math.sqrt(Math.pow(this.getX() - coord.getX(), exponent) 
+		+ Math.pow(this.getY() - coord.getY(), exponent)
+		+ Math.pow(this.getZ() - coord.getZ(), exponent));
     }
 
     public double getX() {
@@ -69,19 +68,20 @@ public class Coordinate {
     public double getZ() {
 	return z;
     }
+
     public boolean isEqual(Coordinate cord) {
 	if (cord != null) {
-	    
-	    return Math.abs(this.x - cord.x) < DELTA
-		    && Math.abs(this.y - cord.y) < DELTA 
-		    && Math.abs(this.z - cord.z) < DELTA;
+
+	    return Math.abs(this.getX() - cord.getX()) < DELTA 
+		    && Math.abs(this.getY() - cord.getY()) < DELTA
+		    && Math.abs(this.getZ() - cord.getZ()) < DELTA;
 	}
 	return false;
     }
-    
+
     @Override
     public int hashCode() {
-        return Objects.hash(this.x, this.y, this.z);
+	return Objects.hash(this.getX(), this.getY(), this.getZ());
     }
 
 }
