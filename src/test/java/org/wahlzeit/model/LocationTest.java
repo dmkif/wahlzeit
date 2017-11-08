@@ -41,7 +41,11 @@ public class LocationTest {
     @Test
     public void testLocation() {
 	assertNotNull(new Location(new Coordinate(0,0,0)));
-	assertNotNull(new Location(null));
+    }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testLocationException() {
+	new Location(null);
     }
 
     /**
@@ -51,10 +55,10 @@ public class LocationTest {
     public void testGetCoordinate() {
 	Coordinate testCoordinate = new Coordinate(0,0,0);
 	Location withZeroPointCoordinateLocation = new Location(testCoordinate);
-	Location withNullCoordinateLocation = new Location(null);
+	Location withNullCoordinateLocation = new Location(new Coordinate(0.0001,0.0,0.000));
 	
 	assertSame(testCoordinate, withZeroPointCoordinateLocation.getCoordinate());
-	assertNull(withNullCoordinateLocation.getCoordinate());
+	assertNotNull(withNullCoordinateLocation.getCoordinate());
 	assertNotSame(testCoordinate, withNullCoordinateLocation.getCoordinate());
     }
 

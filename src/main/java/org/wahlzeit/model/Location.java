@@ -27,6 +27,8 @@ package org.wahlzeit.model;
 
 import java.util.Objects;
 
+import org.hamcrest.core.IsNull;
+
 /**
  * @author dmkif
  *
@@ -37,6 +39,9 @@ public class Location {
 
     public Location(Coordinate coordinate)
     {
+	if(coordinate == null) {
+	    throw new IllegalArgumentException();
+	}
 	this.coordinate=coordinate;
     }
     /**
