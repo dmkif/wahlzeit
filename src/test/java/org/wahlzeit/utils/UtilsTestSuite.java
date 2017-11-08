@@ -42,6 +42,6 @@ import org.junit.runners.*;
  * @author dmkif
  *
  */
-public class utilsTestSuite {
+public class UtilsTestSuite {
     //do nothing
 }

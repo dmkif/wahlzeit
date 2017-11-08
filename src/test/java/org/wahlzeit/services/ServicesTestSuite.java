@@ -34,7 +34,7 @@ import org.junit.runners.*;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses( {
-	org.wahlzeit.services.EmailAddressTest.class,
+	org.wahlzeit.services.mailing.EmailAddressTest.class,
 	org.wahlzeit.services.mailing.EmailServiceTest.class,
 	
 	org.wahlzeit.services.LogBuilderTest.class
@@ -44,6 +44,6 @@ import org.junit.runners.*;
  * @author dmkif
  *
  */
-public class servicesTestSuite {
+public class ServicesTestSuite {
     //do nothing
 }

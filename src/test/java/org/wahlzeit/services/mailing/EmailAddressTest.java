@@ -18,9 +18,10 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-package org.wahlzeit.services;
+package org.wahlzeit.services.mailing;
 
 import org.junit.Test;
+import org.wahlzeit.services.EmailAddress;
 
 import junit.framework.TestCase;
 

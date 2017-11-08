@@ -34,7 +34,7 @@ import org.junit.runners.*;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses( {
-	org.wahlzeit.model.persistence.persistenceTestSuite.class,
+	org.wahlzeit.model.persistence.PersistenceTestSuite.class,
 	
 	org.wahlzeit.model.AccessRightsTest.class,
 	org.wahlzeit.model.CoordinateTest.class,
@@ -51,6 +51,6 @@ import org.junit.runners.*;
  * @author dmkif
  *
  */
-public class modelTestSuite {
+public class ModelTestSuite {
 
 }

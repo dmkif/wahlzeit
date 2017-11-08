@@ -39,6 +39,6 @@ import org.junit.runners.*;
  * @author dmkif
  *
  */
-public class handlersTestSuite {
+public class HandlersTestSuite {
 
 }

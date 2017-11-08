@@ -39,6 +39,6 @@ import org.junit.runners.*;
 	org.wahlzeit.model.persistence.DatastoreAdapterTest.class
 })
 
-public class persistenceTestSuite {
+public class PersistenceTestSuite {
 
 }

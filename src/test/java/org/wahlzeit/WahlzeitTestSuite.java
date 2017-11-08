@@ -33,11 +33,11 @@ import org.junit.runners.*;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses( {
-	org.wahlzeit.handlers.handlersTestSuite.class,
-	org.wahlzeit.model.modelTestSuite.class,
-	org.wahlzeit.services.servicesTestSuite.class,
-	org.wahlzeit.utils.utilsTestSuite.class
+	org.wahlzeit.handlers.HandlersTestSuite.class,
+	org.wahlzeit.model.ModelTestSuite.class,
+	org.wahlzeit.services.ServicesTestSuite.class,
+	org.wahlzeit.utils.UtilsTestSuite.class
 })
-public class AllTests {
+public class WahlzeitTestSuite {
 
 }
