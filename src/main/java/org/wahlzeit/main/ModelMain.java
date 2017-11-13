@@ -21,6 +21,8 @@
 package org.wahlzeit.main;
 
 import org.wahlzeit.model.GlobalsManager;
+import org.wahlzeit.model.MainframePhotoFactory;
+import org.wahlzeit.model.MainframePhotoManager;
 import org.wahlzeit.model.PhotoCaseManager;
 import org.wahlzeit.model.PhotoFactory;
 import org.wahlzeit.model.PhotoManager;
@@ -60,10 +62,11 @@ public abstract class ModelMain extends AbstractMain {
 		UserManager.getInstance().init();
 
 		log.config(LogBuilder.createSystemMessage().addAction("init PhotoFactory").toString());
-		PhotoFactory.initialize();
-
+		//PhotoFactory.initialize();
+		MainframePhotoFactory.initialize();
+		
 		log.config(LogBuilder.createSystemMessage().addAction("load Photos").toString());
-		PhotoManager.getInstance().init();
+		MainframePhotoManager.getInstance().init();
 	}
 
 
@@ -81,7 +84,7 @@ public abstract class ModelMain extends AbstractMain {
 	 */
 	public void saveAll() throws IOException{
 		PhotoCaseManager.getInstance().savePhotoCases();
-		PhotoManager.getInstance().savePhotos();
+		MainframePhotoManager.getInstance().savePhotos();
 		UserManager.getInstance().saveClients();
 		GlobalsManager.getInstance().saveGlobals();
 	}
@@ -93,7 +96,7 @@ public abstract class ModelMain extends AbstractMain {
 		UserManager userManager = UserManager.getInstance();
 		new User(userId, nickName, emailAddress);
 
-		PhotoManager photoManager = PhotoManager.getInstance();
+		MainframePhotoManager photoManager = (MainframePhotoManager) MainframePhotoManager.getInstance();
 		File photoDirFile = new File(photoDir);
 		FileFilter photoFileFilter = new FileFilter() {
 			public boolean accept(File file) {
