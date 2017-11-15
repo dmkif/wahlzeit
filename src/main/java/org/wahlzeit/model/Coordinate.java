@@ -28,14 +28,26 @@ package org.wahlzeit.model;
 
 import java.util.Objects;
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
+@Entity
 public class Coordinate {
+    
+    @Id
+    Long idLong;
     private static final double DELTA = 0.00001;
     private double x;
 
     private double y;
 
     private double z;
-
+ 
+    public Coordinate()
+    {
+	this(-1,-1,-1);
+    }
+    
     public Coordinate(double x, double y, double z) {
 	this.x = x;
 	this.y = y;

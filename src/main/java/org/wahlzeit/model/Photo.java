@@ -151,8 +151,7 @@ public class Photo extends DataObject {
 	 *
 	 */
 	public Photo() {
-		id = PhotoId.getNextId();
-		incWriteCount();
+		this(PhotoId.getNextId());
 	}
 
 	/**
@@ -162,6 +161,7 @@ public class Photo extends DataObject {
 		id = myId;
 
 		incWriteCount();
+		this.setLocation(new Location(new Coordinate(0,0,0)));
 	}
 
 	/**

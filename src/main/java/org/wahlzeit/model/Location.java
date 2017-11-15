@@ -27,20 +27,31 @@ package org.wahlzeit.model;
 
 import java.util.Objects;
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
 /**
  * @author dmkif
  *
  */
+@Entity
 public class Location {
     
+    @Id
+    Long idLong;
+    
     private Coordinate coordinate;
+    
+    public Location() {
+	setCoordinate(new Coordinate());
+    }
 
     public Location(Coordinate coordinate)
     {
 	if(coordinate == null) {
 	    throw new IllegalArgumentException();
 	}
-	this.coordinate=coordinate;
+	setCoordinate(coordinate);
     }
     /**
      * @return the coordinate

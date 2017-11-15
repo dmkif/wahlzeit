@@ -25,10 +25,13 @@
  */
 package org.wahlzeit.model;
 
+import com.googlecode.objectify.annotation.Subclass;
+
 /**
  * @author dmkif
  *
  */
+@Subclass
 public class MainframePhoto extends Photo {
 
     private int millionInstructionsPerSecond;
@@ -44,11 +47,11 @@ public class MainframePhoto extends Photo {
      * @param myId
      */
     public MainframePhoto(PhotoId myId) {
-	super(myId);
+	this(myId, 0, "example_manufacturer");
     }
     
     public MainframePhoto(PhotoId myId, int millionInstructionsPerSecond, String manufacturer) {
-	this(myId);
+	super(myId);
 	this.setMillionInstructionsPerSecond(millionInstructionsPerSecond);
 	this.setManufacturer(manufacturer);
     }

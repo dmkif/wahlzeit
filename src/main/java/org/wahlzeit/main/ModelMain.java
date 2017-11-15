@@ -62,11 +62,12 @@ public abstract class ModelMain extends AbstractMain {
 		UserManager.getInstance().init();
 
 		log.config(LogBuilder.createSystemMessage().addAction("init PhotoFactory").toString());
-		//PhotoFactory.initialize();
-		MainframePhotoFactory.initialize();
+		PhotoFactory.setInstance(MainframePhotoFactory.getInstance());
+		PhotoFactory.initialize();
+		
 		
 		log.config(LogBuilder.createSystemMessage().addAction("load Photos").toString());
-		MainframePhotoManager.getInstance().init();
+		PhotoManager.getInstance().init();
 	}
 
 
