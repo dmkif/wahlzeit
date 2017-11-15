@@ -27,8 +27,6 @@ package org.wahlzeit.model;
 
 import java.util.Objects;
 
-import org.hamcrest.core.IsNull;
-
 /**
  * @author dmkif
  *
