@@ -24,8 +24,8 @@ public class SphericCoordinate implements Coordinate {
     static final double DEFAULT_LONGITUDE = 0.0;
     static final double DEFAULT_RADIUS = 6371.0; // km
 
-    // @Id
-    // private String idLong = "sphericCoordinate";
+    @Id
+    private String idLong = "sphericCoordinate";
     // @Parent
     // Key parent = ObjectManager.applicationRootKey;
 

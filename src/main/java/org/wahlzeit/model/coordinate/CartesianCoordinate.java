@@ -47,10 +47,9 @@ public class CartesianCoordinate implements Coordinate {
     public static final double DEFAULT_Y_COORDINATE = 0.0;
     public static final double DEFAULT_Z_COORDINATE = 0.0;
 
-    // @Id
-    // private String idLong = "cartesianCoordinate";
-    // @Parent
-    // Key parent = ObjectManager.applicationRootKey;
+    @Id
+    private String idLong = "cartesianCoordinate";
+
 
     private double x;
 
