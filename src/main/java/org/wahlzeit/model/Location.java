@@ -46,7 +46,7 @@ public class Location {
     private Coordinate coordinate;
     
     public Location() {
-	setCoordinate((Coordinate)new CartesianCoordinate());
+	//setCoordinate((Coordinate)new CartesianCoordinate());
     }
 
     public Location(Coordinate coordinate)

@@ -12,12 +12,13 @@ import com.google.appengine.api.datastore.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Parent;
+import com.googlecode.objectify.annotation.Subclass;
 
 /**
  * @author dmkif
  *
  */
-@Entity
+@Subclass
 public class SphericCoordinate implements Coordinate {
 
     static final double DEFAULT_LATITUDE = 0.0;
@@ -25,9 +26,9 @@ public class SphericCoordinate implements Coordinate {
     static final double DEFAULT_RADIUS = 6371.0; // km
 
     @Id
-    private String idLong = "sphericCoordinate";
-    // @Parent
-    // Key parent = ObjectManager.applicationRootKey;
+    private Long idLong;
+    @Parent
+    Key parent = ObjectManager.applicationRootKey;
 
     private double latitude;
 

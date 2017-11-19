@@ -35,12 +35,13 @@ import com.google.appengine.api.datastore.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Parent;
+import com.googlecode.objectify.annotation.Subclass;
 
 /**
  * @author dmkif
  *
  */
-@Entity
+@Subclass
 public class CartesianCoordinate implements Coordinate {
 
     public static final double DEFAULT_X_COORDINATE = 0.0;
@@ -48,8 +49,9 @@ public class CartesianCoordinate implements Coordinate {
     public static final double DEFAULT_Z_COORDINATE = 0.0;
 
     @Id
-    private String idLong = "cartesianCoordinate";
-
+    private Long idLong;
+    @Parent
+    Key parent = ObjectManager.applicationRootKey;
 
     private double x;
 
