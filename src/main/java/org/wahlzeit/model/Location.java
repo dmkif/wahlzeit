@@ -27,6 +27,9 @@ package org.wahlzeit.model;
 
 import java.util.Objects;
 
+import org.wahlzeit.model.coordinate.CartesianCoordinate;
+import org.wahlzeit.model.coordinate.Coordinate;
+
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
@@ -43,7 +46,7 @@ public class Location {
     private Coordinate coordinate;
     
     public Location() {
-	setCoordinate(new Coordinate());
+	setCoordinate((Coordinate)new CartesianCoordinate());
     }
 
     public Location(Coordinate coordinate)

@@ -37,7 +37,6 @@ public class MainframePhotoFactory extends PhotoFactory {
     
     private static final Logger log = Logger.getLogger(MainframePhotoFactory.class.getName());
     	
-    private static MainframePhotoFactory instance = null;
 	/**
 	 *
 	 */
@@ -60,8 +59,7 @@ public class MainframePhotoFactory extends PhotoFactory {
 			log.config(LogBuilder.createSystemMessage().addAction("setting mainframe PhotoFactory").toString());
 			setInstance(new MainframePhotoFactory());
 		}
-
-		return instance;
+		return (MainframePhotoFactory)instance;
 	}
 
 	/**
