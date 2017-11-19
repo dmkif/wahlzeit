@@ -28,6 +28,7 @@ package org.wahlzeit.model;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.wahlzeit.model.coordinate.CartesianCoordinate;
 
 /**
  * @author dmkif
@@ -36,11 +37,11 @@ import org.junit.Test;
 public class LocationTest {
 
     /**
-     * Test method for {@link org.wahlzeit.model.Location#Location(org.wahlzeit.model.Coordinate)}.
+     * Test method for {@link org.wahlzeit.model.Location#Location(org.wahlzeit.model.CartesianCoordinate)}.
      */
     @Test
     public void testLocation() {
-	assertNotNull(new Location(new Coordinate(0,0,0)));
+	assertNotNull(new Location(new CartesianCoordinate(0,0,0)));
     }
     
     @Test(expected=IllegalArgumentException.class)
@@ -53,9 +54,9 @@ public class LocationTest {
      */
     @Test
     public void testGetCoordinate() {
-	Coordinate testCoordinate = new Coordinate(0,0,0);
+	CartesianCoordinate testCoordinate = new CartesianCoordinate(0,0,0);
 	Location withZeroPointCoordinateLocation = new Location(testCoordinate);
-	Location withNullCoordinateLocation = new Location(new Coordinate(0.0001,0.0,0.000));
+	Location withNullCoordinateLocation = new Location(new CartesianCoordinate(0.0001,0.0,0.000));
 	
 	assertSame(testCoordinate, withZeroPointCoordinateLocation.getCoordinate());
 	assertNotNull(withNullCoordinateLocation.getCoordinate());
@@ -63,11 +64,11 @@ public class LocationTest {
     }
 
     /**
-     * Test method for {@link org.wahlzeit.model.Location#setCoordinate(org.wahlzeit.model.Coordinate)}.
+     * Test method for {@link org.wahlzeit.model.Location#setCoordinate(org.wahlzeit.model.CartesianCoordinate)}.
      */
     @Test
     public void testSetCoordinate() {
-	Coordinate testCoordinate = new Coordinate(0,0,0);
+	CartesianCoordinate testCoordinate = new CartesianCoordinate(0,0,0);
 	Location testLocation = new Location(testCoordinate);
 	
 	assertSame(testCoordinate, testLocation.getCoordinate());
@@ -88,22 +89,22 @@ public class LocationTest {
      */
     @Test
     public void testEqualsObject() {
-	Coordinate testCoordinate = new Coordinate(0,0,0);
+	CartesianCoordinate testCoordinate = new CartesianCoordinate(0,0,0);
 	Location firstTestLocation = new Location(testCoordinate);
 	Location secondTestLocation = new Location(testCoordinate);
 	
 	assertTrue(firstTestLocation.equals(secondTestLocation));
 	
-	secondTestLocation.setCoordinate(new Coordinate(1,1,1));
+	secondTestLocation.setCoordinate(new CartesianCoordinate(1,1,1));
 	assertFalse(firstTestLocation.equals(secondTestLocation));
 	
-	firstTestLocation.setCoordinate(new Coordinate(1,1,1));
+	firstTestLocation.setCoordinate(new CartesianCoordinate(1,1,1));
 	assertTrue(firstTestLocation.equals(secondTestLocation));
 	
     }
     
     public void testHashCode() {
-	Coordinate testCoordinate = new Coordinate(0,0,0);
+	CartesianCoordinate testCoordinate = new CartesianCoordinate(0,0,0);
 	Location firstTestLocation = new Location(testCoordinate);
 	Location secondTestLocation = new Location(testCoordinate);
 	

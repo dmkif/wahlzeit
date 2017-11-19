@@ -37,14 +37,16 @@ import org.wahlzeit.testEnvironmentProvider.LocalDatastoreServiceTestConfigProvi
  */
 public class MainframePhotoFactoryTest extends LocalDatastoreServiceTestConfigProvider {
 
-    private static MainframePhotoFactory photoFactory= null;
-    
+    private static MainframePhotoFactory photoFactory = null;
+
     @Before
     public void SetUp() throws Throwable {
 	this.before();
     }
+
     /**
-     * Test method for {@link org.wahlzeit.model.MainframePhotoFactory#createPhoto()}.
+     * Test method for
+     * {@link org.wahlzeit.model.MainframePhotoFactory#createPhoto()}.
      */
     @Test
     public void testCreatePhoto() {
@@ -52,7 +54,8 @@ public class MainframePhotoFactoryTest extends LocalDatastoreServiceTestConfigPr
     }
 
     /**
-     * Test method for {@link org.wahlzeit.model.MainframePhotoFactory#getInstance()}.
+     * Test method for
+     * {@link org.wahlzeit.model.MainframePhotoFactory#getInstance()}.
      */
     @Test
     public void testGetInstance() {
@@ -62,9 +65,10 @@ public class MainframePhotoFactoryTest extends LocalDatastoreServiceTestConfigPr
     }
 
     /**
-     * Test method for {@link org.wahlzeit.model.MainframePhotoFactory#setInstance(org.wahlzeit.model.MainframePhotoFactory)}.
+     * Test method for
+     * {@link org.wahlzeit.model.MainframePhotoFactory#setInstance(org.wahlzeit.model.MainframePhotoFactory)}.
      */
-    @Test(expected=IllegalStateException.class)
+    @Test(expected = IllegalStateException.class)
     public void testSetInstanceMainframePhotoFactory() {
 	assertNotNull(PhotoFactory.getInstance());
 	PhotoFactory.setInstance(PhotoFactory.getInstance());

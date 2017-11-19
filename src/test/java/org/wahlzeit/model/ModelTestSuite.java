@@ -37,7 +37,7 @@ import org.junit.runners.*;
 	org.wahlzeit.model.persistence.PersistenceTestSuite.class,
 	
 	org.wahlzeit.model.AccessRightsTest.class,
-	org.wahlzeit.model.CoordinateTest.class,
+	org.wahlzeit.model.coordinate.CoordinateTestSuite.class,
 	org.wahlzeit.model.FlagReasonTest.class,
 	org.wahlzeit.model.GenderTest.class,
 	org.wahlzeit.model.GuestTest.class,
