@@ -30,46 +30,22 @@ import java.util.Objects;
 import org.wahlzeit.model.coordinate.CartesianCoordinate;
 import org.wahlzeit.model.coordinate.Coordinate;
 
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-
-/**
- * @author dmkif
- *
- */
-@Entity
 public class Location {
     
-    @Id
-    Long idLong;
-    
-    private Coordinate coordinate;
-    
+   private Coordinate coordinate;
+
+
     public Location() {
-	//setCoordinate((Coordinate)new CartesianCoordinate());
+	 setCoordinate((Coordinate)new CartesianCoordinate());
     }
 
-    public Location(Coordinate coordinate)
-    {
-	if(coordinate == null) {
+    public Location(Coordinate coordinate) {
+	if (coordinate == null) {
 	    throw new IllegalArgumentException();
 	}
-	setCoordinate(coordinate);
-    }
-    /**
-     * @return the coordinate
-     */
-    public Coordinate getCoordinate() {
-	return coordinate;
+	this.setCoordinate(coordinate);
     }
 
-    /**
-     * @param coordinate the coordinate to set
-     */
-    public void setCoordinate(Coordinate coordinate) {
-	this.coordinate = coordinate;
-    }
-    
     @Override
     public boolean equals(Object obj) {
 	if (this.getClass().isInstance(obj)) {
@@ -77,10 +53,25 @@ public class Location {
 	}
 	return false;
     }
-    
+
+    /**
+     * @return the coordinate
+     */
+    public Coordinate getCoordinate() {
+	return coordinate;
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(this.getCoordinate());
+	return Objects.hash(this.getCoordinate());
+    }
+
+    /**
+     * @param coordinate
+     *            the coordinate to set
+     */
+    public void setCoordinate(Coordinate coordinate) {
+	this.coordinate = coordinate;
     }
 
 }

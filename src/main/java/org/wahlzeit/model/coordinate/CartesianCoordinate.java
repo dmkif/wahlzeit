@@ -35,28 +35,18 @@ import com.google.appengine.api.datastore.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Parent;
-import com.googlecode.objectify.annotation.Subclass;
 
-/**
- * @author dmkif
- *
- */
-@Subclass
 public class CartesianCoordinate implements Coordinate {
 
     public static final double DEFAULT_X_COORDINATE = 0.0;
-    public static final double DEFAULT_Y_COORDINATE = 0.0;
-    public static final double DEFAULT_Z_COORDINATE = 0.0;
 
-    @Id
-    private Long idLong;
-    @Parent
-    Key parent = ObjectManager.applicationRootKey;
+    public static final double DEFAULT_Y_COORDINATE = 0.0;
+
+    public static final double DEFAULT_Z_COORDINATE = 0.0;
 
     private double x;
 
     private double y;
-
     private double z;
 
     public CartesianCoordinate() {
@@ -151,6 +141,18 @@ public class CartesianCoordinate implements Coordinate {
 		    && DoubleUtil.isDoubleEqual(this.getZ(), cartCoordinate.getZ());
 	}
 	return false;
+    }
+
+    public void setX(double x) {
+	this.x = x;
+    }
+
+    public void setY(double y) {
+	this.y = y;
+    }
+
+    public void setZ(double z) {
+	this.z = z;
     }
 
 }

@@ -1,47 +1,31 @@
 /**
- * 
+ *
  */
 package org.wahlzeit.model.coordinate;
 
 import java.util.Objects;
 
-import org.wahlzeit.services.ObjectManager;
 import org.wahlzeit.utils.DoubleUtil;
 
-import com.google.appengine.api.datastore.Key;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Parent;
-import com.googlecode.objectify.annotation.Subclass;
 
-/**
- * @author dmkif
- *
- */
-@Subclass
 public class SphericCoordinate implements Coordinate {
 
     static final double DEFAULT_LATITUDE = 0.0;
+
     static final double DEFAULT_LONGITUDE = 0.0;
+
     static final double DEFAULT_RADIUS = 6371.0; // km
 
-    @Id
-    private Long idLong;
-    @Parent
-    Key parent = ObjectManager.applicationRootKey;
-
     private double latitude;
-
     private double longitude;
-
     private double radius;
 
     public SphericCoordinate() {
-	this(DEFAULT_LATITUDE, DEFAULT_LONGITUDE);
+	this(SphericCoordinate.DEFAULT_LATITUDE, SphericCoordinate.DEFAULT_LONGITUDE);
     }
 
     public SphericCoordinate(double latitude, double longitude) {
-	this(latitude, longitude, DEFAULT_RADIUS);
+	this(latitude, longitude, SphericCoordinate.DEFAULT_RADIUS);
     }
 
     public SphericCoordinate(double latitude, double longitude, double radius) {
@@ -55,8 +39,8 @@ public class SphericCoordinate implements Coordinate {
     }
 
     /*
-     * transform a SphericCoordinate as a CartesianCoordinate
-     * source: http://keisan.casio.com/exec/system/1359534351
+     * transform a SphericCoordinate as a CartesianCoordinate source:
+     * http://keisan.casio.com/exec/system/1359534351
      */
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
@@ -68,6 +52,24 @@ public class SphericCoordinate implements Coordinate {
 	double z = this.getRadius() * Math.cos(radLongitude);
 
 	return new CartesianCoordinate(x, y, z);
+    }
+
+    private void assertIsValidLatitude(double latitude) throws IllegalArgumentException {
+	if (latitude < -90 || latitude > 90 || Double.isNaN(latitude)) {
+	    throw new IllegalArgumentException("Latitude is out of range.");
+	}
+    }
+
+    private void assertIsValidLongitude(double longitude) throws IllegalArgumentException {
+	if (longitude < -180 || longitude > 180 || Double.isNaN(longitude)) {
+	    throw new IllegalArgumentException("Longitude is out of range.");
+	}
+    }
+
+    private void assertIsValidRadius(double radius) throws IllegalArgumentException {
+	if (radius < 0 || Double.isNaN(radius)) {
+	    throw new IllegalArgumentException("Radius is out of range.");
+	}
     }
 
     /*
@@ -96,7 +98,7 @@ public class SphericCoordinate implements Coordinate {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.wahlzeit.model.Coordinate#getDistance(org.wahlzeit.model.Coordinate)
      */
     @Override
@@ -113,12 +115,12 @@ public class SphericCoordinate implements Coordinate {
     }
 
     public double getRadius() {
-	return radius;
+	return this.radius;
     }
 
     /*
      * calculate the difference between to spheric coordinates.
-     * 
+     *
      */
     @Override
     public double getSphericDistance(Coordinate coordinate) {
@@ -155,22 +157,16 @@ public class SphericCoordinate implements Coordinate {
 		&& DoubleUtil.isDoubleEqual(this.getRadius(), spherCoordinate.getRadius());
     }
 
-    private void assertIsValidLatitude(double latitude) throws IllegalArgumentException {
-	if (latitude < -90 || latitude > 90 || Double.isNaN(latitude)) {
-	    throw new IllegalArgumentException("Latitude is out of range.");
-	}
+    public void setLatitude(double latitude) {
+	this.latitude = latitude;
     }
 
-    private void assertIsValidLongitude(double longitude) throws IllegalArgumentException {
-	if (longitude < -180 || longitude > 180 || Double.isNaN(longitude)) {
-	    throw new IllegalArgumentException("Longitude is out of range.");
-	}
+    public void setLongitude(double longitude) {
+	this.longitude = longitude;
     }
 
-    private void assertIsValidRadius(double radius) throws IllegalArgumentException {
-	if (radius < 0 || Double.isNaN(radius)) {
-	    throw new IllegalArgumentException("Radius is out of range.");
-	}
+    public void setRadius(double radius) {
+	this.radius = radius;
     }
 
 }
