@@ -28,15 +28,9 @@ package org.wahlzeit.model.coordinate;
 
 import java.util.Objects;
 
-import org.wahlzeit.services.ObjectManager;
 import org.wahlzeit.utils.DoubleUtil;
 
-import com.google.appengine.api.datastore.Key;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Parent;
-
-public class CartesianCoordinate implements Coordinate {
+public class CartesianCoordinate extends AbstractCoordinate implements Coordinate {
 
     public static final double DEFAULT_X_COORDINATE = 0.0;
 
@@ -83,23 +77,7 @@ public class CartesianCoordinate implements Coordinate {
     }
 
     @Override
-    public boolean equals(Object obj) {
-	if (obj instanceof Coordinate) {
-	    return this.isEqual((Coordinate) obj);
-	}
-	return false;
-    }
-
-    @Override
     public double getCartesianDistance(Coordinate coordinate) {
-	if (coordinate == null) {
-	    throw new IllegalArgumentException();
-	}
-	return this.getDistance(coordinate);
-    }
-
-    @Override
-    public double getDistance(Coordinate coordinate) {
 	if (coordinate == null) {
 	    throw new IllegalArgumentException();
 	}
@@ -111,8 +89,8 @@ public class CartesianCoordinate implements Coordinate {
     }
 
     @Override
-    public double getSphericDistance(Coordinate coordinate) {
-	return this.asSphericCoordinate().getDistance(coordinate);
+    public double getDistance(Coordinate coordinate) {
+	return this.getCartesianDistance(coordinate);
     }
 
     public double getX() {

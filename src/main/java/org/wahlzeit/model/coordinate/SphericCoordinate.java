@@ -8,7 +8,7 @@ import java.util.Objects;
 import org.wahlzeit.utils.DoubleUtil;
 
 
-public class SphericCoordinate implements Coordinate {
+public class SphericCoordinate extends AbstractCoordinate implements Coordinate {
 
     static final double DEFAULT_LATITUDE = 0.0;
 
@@ -29,7 +29,7 @@ public class SphericCoordinate implements Coordinate {
     }
 
     public SphericCoordinate(double latitude, double longitude, double radius) {
-	this.assertIsValidLatitude(latitude);
+	super.assertIsValidLatitude(latitude);
 	this.assertIsValidLongitude(longitude);
 	this.assertIsValidRadius(radius);
 
@@ -54,46 +54,12 @@ public class SphericCoordinate implements Coordinate {
 	return new CartesianCoordinate(x, y, z);
     }
 
-    private void assertIsValidLatitude(double latitude) throws IllegalArgumentException {
-	if (latitude < -90 || latitude > 90 || Double.isNaN(latitude)) {
-	    throw new IllegalArgumentException("Latitude is out of range.");
-	}
-    }
-
-    private void assertIsValidLongitude(double longitude) throws IllegalArgumentException {
-	if (longitude < -180 || longitude > 180 || Double.isNaN(longitude)) {
-	    throw new IllegalArgumentException("Longitude is out of range.");
-	}
-    }
-
-    private void assertIsValidRadius(double radius) throws IllegalArgumentException {
-	if (radius < 0 || Double.isNaN(radius)) {
-	    throw new IllegalArgumentException("Radius is out of range.");
-	}
-    }
-
     /*
      * return this object as it is ;-)
      */
     @Override
     public SphericCoordinate asSphericCoordinate() {
 	return this;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-	if (obj == null || !(obj instanceof Coordinate)) {
-	    return false;
-	}
-	return this.isEqual((Coordinate) obj);
-    }
-
-    /*
-     * return distance in cartesian coordinate system
-     */
-    @Override
-    public double getCartesianDistance(Coordinate coordinate) {
-	return this.asCartesianCoordinate().getDistance(coordinate);
     }
 
     /*
