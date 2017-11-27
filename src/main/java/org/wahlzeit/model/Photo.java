@@ -129,9 +129,9 @@ public class Photo extends DataObject {
 	 */
 	//TODO: change it to a single long
 	@Id
-	Long idLong;
+	protected Long idLong;
 	@Parent
-	Key parent = ObjectManager.applicationRootKey;
+	protected Key parent = ObjectManager.applicationRootKey;
 	
 	protected Location location;
 

@@ -30,7 +30,10 @@ import java.util.Objects;
 
 import org.wahlzeit.utils.DoubleUtil;
 
-public class CartesianCoordinate extends AbstractCoordinate implements Coordinate {
+import com.googlecode.objectify.annotation.Subclass;
+
+@Subclass
+public class CartesianCoordinate extends AbstractCoordinate implements Coordinate{
 
     public static final double DEFAULT_X_COORDINATE = 0.0;
 

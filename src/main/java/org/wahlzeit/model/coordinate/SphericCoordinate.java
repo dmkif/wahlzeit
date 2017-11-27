@@ -7,8 +7,10 @@ import java.util.Objects;
 
 import org.wahlzeit.utils.DoubleUtil;
 
+import com.googlecode.objectify.annotation.Subclass;
 
-public class SphericCoordinate extends AbstractCoordinate implements Coordinate {
+@Subclass
+public class SphericCoordinate extends AbstractCoordinate {
 
     static final double DEFAULT_LATITUDE = 0.0;
 

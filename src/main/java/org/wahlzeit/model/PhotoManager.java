@@ -48,7 +48,7 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 *
 	 */
-	protected static final PhotoManager instance = new PhotoManager();
+	protected static PhotoManager instance = new MainframePhotoManager();
 
 	private static final Logger log = Logger.getLogger(PhotoManager.class.getName());
 

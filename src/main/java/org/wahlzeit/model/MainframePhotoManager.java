@@ -25,26 +25,7 @@
  */
 package org.wahlzeit.model;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Logger;
-
-import org.wahlzeit.model.persistence.ImageStorage;
-import org.wahlzeit.services.LogBuilder;
-import org.wahlzeit.services.ObjectManager;
-import org.wahlzeit.services.Persistent;
-
-import com.google.appengine.api.images.Image;
-import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.Work;
 
 /**
  * A photo manager provides access to and manages mainframe photos.
@@ -58,43 +39,43 @@ public class MainframePhotoManager extends PhotoManager {
     	 *
     	 */
     	public MainframePhotoManager() {
-    		photoTagCollector = MainframePhotoFactory.getInstance().createPhotoTagCollector();
+    		super();    		
     	}
 
-    	/**
-    	 * @methodtype init Loads all Photos from the Datastore and holds them in the cache
-    	 */
-    	public void init() {
-    		loadPhotos();
-    	}
+//    	/**
+//    	 * @methodtype init Loads all Photos from the Datastore and holds them in the cache
+//    	 */
+//    	public void init() {
+//    		loadPhotos();
+//    	}
 
-    	/**
-    	 * @methodtype command
-    	 *
-    	 * Load all persisted photos. Executed when Wahlzeit is restarted.
-    	 */
-    	public void loadPhotos() {
-    		Collection<MainframePhoto> existingPhotos = ObjectifyService.run(new Work<Collection<MainframePhoto>>() {
-    			@Override
-    			public Collection<MainframePhoto> run() {
-    				Collection<MainframePhoto> existingPhotos = new ArrayList<MainframePhoto>();
-    				readObjects(existingPhotos, MainframePhoto.class);
-    				return existingPhotos;
-    			}
-    		});
-
-    		for (MainframePhoto photo : existingPhotos) {
-    			if (!doHasPhoto(photo.getId())) {
-    				log.config(LogBuilder.createSystemMessage().
-    						addParameter("Load Photo with ID", photo.getIdAsString()).toString());
-    				loadScaledImages(photo);
-    				doAddPhoto(photo);
-    			} else {
-    				log.config(LogBuilder.createSystemMessage().
-    						addParameter("Already loaded Photo", photo.getIdAsString()).toString());
-    			}
-    		}
-
-    		log.info(LogBuilder.createSystemMessage().addMessage("All photos loaded.").toString());
-    	}
+//    	/**
+//    	 * @methodtype command
+//    	 *
+//    	 * Load all persisted photos. Executed when Wahlzeit is restarted.
+//    	 */
+//    	public void loadPhotos() {
+//    		Collection<MainframePhoto> existingPhotos = ObjectifyService.run(new Work<Collection<MainframePhoto>>() {
+//    			@Override
+//    			public Collection<MainframePhoto> run() {
+//    				Collection<MainframePhoto> existingPhotos = new ArrayList<MainframePhoto>();
+//    				readObjects(existingPhotos, MainframePhoto.class);
+//    				return existingPhotos;
+//    			}
+//    		});
+//
+//    		for (MainframePhoto photo : existingPhotos) {
+//    			if (!doHasPhoto(photo.getId())) {
+//    				log.config(LogBuilder.createSystemMessage().
+//    						addParameter("Load Photo with ID", photo.getIdAsString()).toString());
+//    				loadScaledImages(photo);
+//    				doAddPhoto(photo);
+//    			} else {
+//    				log.config(LogBuilder.createSystemMessage().
+//    						addParameter("Already loaded Photo", photo.getIdAsString()).toString());
+//    			}
+//    		}
+//
+//    		log.info(LogBuilder.createSystemMessage().addMessage("All photos loaded.").toString());
+//    	}
 }
