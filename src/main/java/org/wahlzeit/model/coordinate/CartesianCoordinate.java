@@ -91,11 +91,6 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
 		+ Math.pow(this.getZ() - cartCoordinate.getZ(), exponent));
     }
 
-    @Override
-    public double getDistance(Coordinate coordinate) {
-	return this.getCartesianDistance(coordinate);
-    }
-
     public double getX() {
 	return this.x;
     }

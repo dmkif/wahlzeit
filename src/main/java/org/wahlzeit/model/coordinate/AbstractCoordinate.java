@@ -34,7 +34,9 @@ public abstract class AbstractCoordinate implements Coordinate {
 
     public abstract boolean isEqual(Coordinate coordinate);
 
-    public abstract double getDistance(Coordinate coordinate);
+    public double getDistance(Coordinate coordinate) {
+	return this.getCartesianDistance(coordinate);
+    }
 
     /*
      * delegates CartesianDistance to kind class implementation

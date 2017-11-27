@@ -64,16 +64,6 @@ public class SphericCoordinate extends AbstractCoordinate {
 	return this;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.wahlzeit.model.Coordinate#getDistance(org.wahlzeit.model.Coordinate)
-     */
-    @Override
-    public double getDistance(Coordinate coordinate) {
-	return this.getSphericDistance(coordinate);
-    }
-
     public double getLatitude() {
 	return this.latitude;
     }
