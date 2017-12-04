@@ -58,18 +58,18 @@ public class SphericCoordinateTest {
 	try {
 	    new SphericCoordinate(-12345.0013, 0.00);
 	    fail();
-	} catch (IllegalArgumentException ex) {
+	} catch (AssertionError ex) {
 	}
 
 	try {
 	    new SphericCoordinate(49.00, -192.00);
 	    fail();
-	} catch (IllegalArgumentException ex) {
+	} catch (AssertionError ex) {
 	}
 	try {
 	    new SphericCoordinate(90.00, -180.00, -10.00);
 	    fail();
-	} catch (IllegalArgumentException ex) {
+	} catch (AssertionError ex) {
 	}
     }
 
@@ -102,7 +102,12 @@ public class SphericCoordinateTest {
     public void testEqualsObject() {
 	assertTrue(sphericCoord.equals(sphericCoord));
 	assertFalse(sphericCoord.equals(cartesianCoord));
-	assertFalse(sphericCoord.equals(null));
+	try {
+	    sphericCoord.equals(null);
+	    fail("invalid assertion passed!");
+	}catch(AssertionError er) {
+	    
+	}
     }
 
     /**
@@ -124,19 +129,19 @@ public class SphericCoordinateTest {
      */
     @Test
     public void testGetDistance() {
-	assertEquals(9270.4512616, sphericCoord.getDistance(sphericOtherCoord), DoubleUtil.DELTA);
-	assertEquals(6670.8640116, sphericCoord.getDistance(sphericOtherCoord.asCartesianCoordinate()),
+	assertEquals(11195.5976476, sphericCoord.getDistance(sphericOtherCoord), DoubleUtil.DELTA);
+	assertEquals(11195.5976476, sphericCoord.getDistance(sphericOtherCoord.asCartesianCoordinate()),
 		DoubleUtil.DELTA);
-	assertEquals(5487.6320538, sphericCoord.getDistance(cartesianCoord), DoubleUtil.DELTA);
-	assertNotEquals(sphericCoord.getDistance(cartesianCoord),
+	assertEquals(4415.1925623, sphericCoord.getDistance(cartesianCoord), DoubleUtil.DELTA);
+	assertNotEquals(sphericCoord.getSphericDistance(cartesianCoord),
 		sphericCoord.asCartesianCoordinate().getDistance(cartesianCoord));
 	// usually next two testcases have the same distance ...
 	// is it true, because we meassure the distance on a sphere in only one
 	// direction
 	// so the distance between point a and point b maybe different as distance point
 	// b and point a
-	assertEquals(3198.8100886, sphericCoord.getDistance(cartesianPrimitivCoord), DoubleUtil.DELTA);
-	assertEquals(869.6439487, cartesianPrimitivCoord.asSphericCoordinate().getDistance(sphericCoord),
+	assertEquals(3198.8100886, sphericCoord.getSphericDistance(cartesianPrimitivCoord), DoubleUtil.DELTA);
+	assertEquals(5226.9015275, cartesianPrimitivCoord.asSphericCoordinate().getDistance(sphericCoord),
 		DoubleUtil.DELTA);
 
     }

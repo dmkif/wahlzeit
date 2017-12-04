@@ -9,6 +9,10 @@ import org.wahlzeit.utils.DoubleUtil;
 
 import com.googlecode.objectify.annotation.Subclass;
 
+/**
+ * @author dmkif
+ *
+ */
 @Subclass
 public class SphericCoordinate extends AbstractCoordinate {
 
@@ -31,13 +35,17 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
 
     public SphericCoordinate(double latitude, double longitude, double radius) {
-	super.assertIsValidLatitude(latitude);
-	this.assertIsValidLongitude(longitude);
-	this.assertIsValidRadius(radius);
+	// precondition
+	assertIsValidLatitude(latitude);
+	assertIsValidLongitude(longitude);
+	assertIsValidRadius(radius);
 
 	this.latitude = latitude;
 	this.longitude = longitude;
 	this.radius = radius;
+
+	// postcondition
+	assertClassInvariants();
     }
 
     /*
@@ -82,6 +90,10 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     @Override
     public double getSphericDistance(Coordinate coordinate) {
+	// precondition
+	assertIsNotNull(coordinate);
+	assertClassInvariants();
+
 	double radLatitude = Math.toRadians(this.getLatitude());
 	double radLongitude = Math.toRadians(this.getLongitude());
 
@@ -96,11 +108,16 @@ public class SphericCoordinate extends AbstractCoordinate {
 
 	double distanceInKM = 2 * Math.asin(angle) * this.getRadius();
 
+	// postcondition
+	assertIsValidDouble(distanceInKM);
+
 	return distanceInKM;
     }
 
     @Override
     public int hashCode() {
+	//precondition
+	assertClassInvariants();
 	return Objects.hash(this.getLatitude(), this.getLongitude(), this.getRadius());
     }
 
@@ -109,6 +126,9 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     @Override
     public boolean isEqual(Coordinate coordinate) {
+	// precondition
+	assertIsNotNull(coordinate);
+	assertClassInvariants();
 	SphericCoordinate spherCoordinate = coordinate.asSphericCoordinate();
 	return DoubleUtil.isDoubleEqual(this.getLatitude(), spherCoordinate.getLatitude())
 		&& DoubleUtil.isDoubleEqual(this.getLongitude(), spherCoordinate.getLongitude())
@@ -116,15 +136,59 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
 
     public void setLatitude(double latitude) {
+	// precondition
+	assertIsNotNull(latitude);
+	assertIsValidLatitude(latitude);
 	this.latitude = latitude;
     }
 
     public void setLongitude(double longitude) {
+	// precondition
+	assertIsNotNull(longitude);
+	assertIsValidLongitude(longitude);
 	this.longitude = longitude;
     }
 
     public void setRadius(double radius) {
+	// precondition
+	assertIsNotNull(radius);
+	assertIsValidRadius(radius);
 	this.radius = radius;
+    }
+
+    /**
+     * @throws CoordinateParameterException
+     * @methodtype assertion inpspired by: https://github.com/Snengl/wahlzeit
+     */
+    protected void assertIsValidLatitude(double latitude) {
+	assertIsValidDouble(latitude);
+	assert(!(latitude < -90 || latitude > 90 || Double.isNaN(latitude)));
+    }
+
+    /**
+     * @throws CoordinateParameterException
+     * @methodtype assertion inpspired by: https://github.com/Snengl/wahlzeit
+     */
+    protected void assertIsValidLongitude(double longitude) throws IllegalArgumentException {
+	assertIsValidDouble(longitude);
+	assert (!(longitude < -180 || longitude > 180 || Double.isNaN(longitude)));
+    }
+
+    /**
+     * @throws CoordinateParameterException
+     * @methodtype assertion inpspired by: https://github.com/Snengl/wahlzeit
+     */
+    protected void assertIsValidRadius(double radius) throws IllegalArgumentException {
+	assertIsValidDouble(radius);
+	assert (!(radius < 0 || Double.isNaN(radius)));
+    }
+
+    @Override
+    protected void assertClassInvariants() {
+	assertIsNotNull(this);
+	assertIsValidLatitude(this.getLatitude());
+	assertIsValidLongitude(this.getLongitude());
+	assertIsValidRadius(this.getRadius());
     }
 
 }

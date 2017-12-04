@@ -93,7 +93,11 @@ public class CartesianCoordinateTest {
 	assertTrue(firstTempTestCoordinate.equals(firstTestCoordinate));
 	assertTrue(thirdTempTestCoordinate.equals(fourthTempTestCoordinate));
 	assertFalse(firstTestCoordinate.equals(secondTempTestCoordinate));
-	assertFalse(firstTestCoordinate.equals(null));
+	try {
+	    assertFalse(firstTestCoordinate.equals(null));
+	    fail("invalid assertion passed!");
+	} catch (AssertionError er) {
+	}
 	assertFalse(firstTestCoordinate.equals(new Object()));
     }
 
@@ -128,12 +132,12 @@ public class CartesianCoordinateTest {
 	assertNotEquals(firstTestCoordinate.hashCode(), secondTestCoordinate.hashCode());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AssertionError.class)
     public void testExceptiongetCartesianDistance() {
 	firstTestCoordinate.getCartesianDistance(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AssertionError.class)
     public void testExceptiongetDistance() {
 	firstTestCoordinate.getDistance(null);
     }

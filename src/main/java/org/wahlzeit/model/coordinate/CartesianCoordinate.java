@@ -33,7 +33,7 @@ import org.wahlzeit.utils.DoubleUtil;
 import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass
-public class CartesianCoordinate extends AbstractCoordinate implements Coordinate{
+public class CartesianCoordinate extends AbstractCoordinate implements Coordinate {
 
     public static final double DEFAULT_X_COORDINATE = 0.0;
 
@@ -52,13 +52,24 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
     }
 
     public CartesianCoordinate(double x, double y, double z) {
-	this.x = x;
-	this.y = y;
-	this.z = z;
+	// precondition
+	assertClassInvariants();
+	assertIsValidX(x);
+	assertIsValidY(y);
+	assertIsValidZ(z);
+
+	this.setX(x);
+	this.setY(y);
+	this.setZ(z);
+
+	// postcondition
+	assertClassInvariants();
     }
 
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
+	// precondition
+	assertClassInvariants();
 	return this;
     }
 
@@ -68,6 +79,9 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
      */
     @Override
     public SphericCoordinate asSphericCoordinate() {
+	// precondition
+	assertClassInvariants();
+
 	double squareX = Math.pow(this.getX(), 2);
 	double squareY = Math.pow(this.getY(), 2);
 	double squareZ = Math.pow(this.getZ(), 2);
@@ -81,9 +95,7 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
 
     @Override
     public double getCartesianDistance(Coordinate coordinate) {
-	if (coordinate == null) {
-	    throw new IllegalArgumentException();
-	}
+	assertIsNotNull(coordinate);
 	CartesianCoordinate cartCoordinate = coordinate.asCartesianCoordinate();
 	short exponent = 2;
 	return Math.sqrt(Math.pow(this.getX() - cartCoordinate.getX(), exponent)
@@ -105,6 +117,8 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
 
     @Override
     public int hashCode() {
+	// precondition
+	assertClassInvariants();
 	return Objects.hash(this.getX(), this.getY(), this.getZ());
     }
 
@@ -120,15 +134,41 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
     }
 
     public void setX(double x) {
+	// precondition
+	assertIsValidX(x);
 	this.x = x;
     }
 
     public void setY(double y) {
+	// precondition
+	assertIsValidY(y);
 	this.y = y;
     }
 
     public void setZ(double z) {
+	// precondition
+	assertIsValidZ(z);
 	this.z = z;
+    }
+
+    protected void assertIsValidX(double value) {
+	assertIsValidDouble(value);
+    }
+
+    protected void assertIsValidY(double value) {
+	assertIsValidDouble(value);
+    }
+
+    protected void assertIsValidZ(double value) {
+	assertIsValidDouble(value);
+    }
+
+    @Override
+    protected void assertClassInvariants() {
+	assertIsNotNull(this);
+	assertIsValidX(this.getX());
+	assertIsValidY(this.getY());
+	assertIsValidZ(this.getZ());
     }
 
 }
