@@ -27,29 +27,14 @@ package org.wahlzeit.model;
 
 import java.util.Objects;
 
-import org.wahlzeit.model.coordinate.CartesianCoordinate;
 import org.wahlzeit.model.coordinate.Coordinate;
-import org.wahlzeit.services.ObjectManager;
 
-import com.google.appengine.api.datastore.Key;
-import com.googlecode.objectify.annotation.Container;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Parent;
-
-@Entity
 public class Location {
-    // Datastore values
-    @Id
-    private Long idLong;
-    @Parent
-    Key parent = ObjectManager.applicationRootKey;
 
-    @Container
-    private CartesianCoordinate coordinate;
+    private Coordinate coordinate;
 
     public Location() {
-	setCoordinate((Coordinate) new CartesianCoordinate());
+	//setCoordinate((Coordinate) new CartesianCoordinate());
     }
 
     public Location(Coordinate coordinate) {

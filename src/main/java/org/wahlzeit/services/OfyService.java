@@ -31,7 +31,6 @@ public class OfyService {
 	static {
 		factory().register(CartesianCoordinate.class);
 		factory().register(SphericCoordinate.class);
-		factory().register(Location.class);
 		factory().register(Photo.class);
 		factory().register(MainframePhoto.class);
 		factory().register(Globals.class);
@@ -43,7 +42,6 @@ public class OfyService {
 		factory().register(Guest.class);
 		factory().register(PhotoCase.class);
 		factory().register(ImageWrapper.class);
-		//factory().register(Coordinate.class);
 	}
 
 	public static Objectify ofy() {
