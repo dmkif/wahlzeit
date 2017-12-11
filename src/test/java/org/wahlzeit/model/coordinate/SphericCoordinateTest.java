@@ -58,18 +58,18 @@ public class SphericCoordinateTest {
 	try {
 	    new SphericCoordinate(-12345.0013, 0.00);
 	    fail();
-	} catch (AssertionError ex) {
+	} catch (IllegalArgumentException ex) {
 	}
 
 	try {
 	    new SphericCoordinate(49.00, -192.00);
 	    fail();
-	} catch (AssertionError ex) {
+	} catch (IllegalArgumentException ex) {
 	}
 	try {
 	    new SphericCoordinate(90.00, -180.00, -10.00);
 	    fail();
-	} catch (AssertionError ex) {
+	} catch (IllegalArgumentException ex) {
 	}
     }
 
@@ -105,7 +105,7 @@ public class SphericCoordinateTest {
 	try {
 	    sphericCoord.equals(null);
 	    fail("invalid assertion passed!");
-	}catch(AssertionError er) {
+	}catch(IllegalArgumentException er) {
 	    
 	}
     }

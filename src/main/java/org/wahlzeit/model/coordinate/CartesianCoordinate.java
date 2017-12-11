@@ -51,7 +51,7 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
 		CartesianCoordinate.DEFAULT_Z_COORDINATE);
     }
 
-    public CartesianCoordinate(double x, double y, double z) {
+    public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException{
 	// precondition
 	assertClassInvariants();
 	assertIsValidX(x);
@@ -78,7 +78,7 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
      * http://keisan.casio.com/exec/system/1359534351
      */
     @Override
-    public SphericCoordinate asSphericCoordinate() {
+    public SphericCoordinate asSphericCoordinate() throws IllegalArgumentException {
 	// precondition
 	assertClassInvariants();
 
@@ -94,7 +94,7 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
     }
 
     @Override
-    public double getCartesianDistance(Coordinate coordinate) {
+    public double getCartesianDistance(Coordinate coordinate) throws IllegalArgumentException {
 	assertIsNotNull(coordinate);
 	CartesianCoordinate cartCoordinate = coordinate.asCartesianCoordinate();
 	short exponent = 2;
@@ -123,7 +123,7 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
     }
 
     @Override
-    public boolean isEqual(Coordinate coordinate) {
+    public boolean isEqual(Coordinate coordinate){
 	if (coordinate != null) {
 	    CartesianCoordinate cartCoordinate = coordinate.asCartesianCoordinate();
 	    return DoubleUtil.isDoubleEqual(this.getX(), cartCoordinate.getX())
@@ -133,34 +133,46 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
 	return false;
     }
 
-    public void setX(double x) {
+    public void setX(double x) throws IllegalArgumentException{
 	// precondition
 	assertIsValidX(x);
 	this.x = x;
     }
 
-    public void setY(double y) {
+    public void setY(double y) throws IllegalArgumentException{
 	// precondition
 	assertIsValidY(y);
 	this.y = y;
     }
 
-    public void setZ(double z) {
+    public void setZ(double z) throws IllegalArgumentException {
 	// precondition
 	assertIsValidZ(z);
 	this.z = z;
     }
 
-    protected void assertIsValidX(double value) {
-	assertIsValidDouble(value);
+    protected void assertIsValidX(double value) throws IllegalArgumentException {
+	try {
+	    assertIsValidDouble(value);
+	}catch(IllegalArgumentException ex) {
+	    throw new IllegalArgumentException("Coordinate invalid X value " + ex.getMessage());
+	}
     }
 
-    protected void assertIsValidY(double value) {
-	assertIsValidDouble(value);
+    protected void assertIsValidY(double value) throws IllegalArgumentException {
+	try {
+	    assertIsValidDouble(value);
+	}catch(IllegalArgumentException ex) {
+	    throw new IllegalArgumentException("Coordinate invalid Y value " + ex.getMessage());
+	}
     }
 
-    protected void assertIsValidZ(double value) {
-	assertIsValidDouble(value);
+    protected void assertIsValidZ(double value) throws IllegalArgumentException {
+	try {
+	    assertIsValidDouble(value);
+	}catch(IllegalArgumentException ex) {
+	    throw new IllegalArgumentException("Coordinate invalid Z value " + ex.getMessage());
+	}
     }
 
     @Override

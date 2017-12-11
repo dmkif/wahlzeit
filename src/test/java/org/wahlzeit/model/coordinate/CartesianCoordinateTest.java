@@ -96,7 +96,7 @@ public class CartesianCoordinateTest {
 	try {
 	    assertFalse(firstTestCoordinate.equals(null));
 	    fail("invalid assertion passed!");
-	} catch (AssertionError er) {
+	} catch (IllegalArgumentException er) {
 	}
 	assertFalse(firstTestCoordinate.equals(new Object()));
     }
@@ -132,12 +132,12 @@ public class CartesianCoordinateTest {
 	assertNotEquals(firstTestCoordinate.hashCode(), secondTestCoordinate.hashCode());
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testExceptiongetCartesianDistance() {
 	firstTestCoordinate.getCartesianDistance(null);
     }
 
-    @Test(expected = AssertionError.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testExceptiongetDistance() {
 	firstTestCoordinate.getDistance(null);
     }

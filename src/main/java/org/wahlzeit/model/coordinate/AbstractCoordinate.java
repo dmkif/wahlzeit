@@ -54,12 +54,18 @@ public abstract class AbstractCoordinate implements Coordinate {
 	return this.asSphericCoordinate().getSphericDistance(coordinate);
     }
 
-    public void assertIsNotNull(Object obj) {
-	assert (obj != null);
+    public void assertIsNotNull(Object obj) throws IllegalArgumentException {
+	if(obj == null) {
+	    throw new IllegalArgumentException("Invalid argument - the given object is null. this is not allowed!");
+	}
 
     }
 
-    public void assertIsValidDouble(double value) {
-	assert (value != Double.NaN && value != Double.NEGATIVE_INFINITY && value != Double.POSITIVE_INFINITY);
+    public void assertIsValidDouble(double value) throws IllegalArgumentException{
+	if(value==Double.NaN) {
+	    throw new IllegalArgumentException("Invalid argument - the argument must not be NaN");
+	}else if(value == Double.NEGATIVE_INFINITY || value == Double.POSITIVE_INFINITY) {
+	    throw new IllegalArgumentException("Invalid argument - the value should not be infinity");
+	};
     }
 }

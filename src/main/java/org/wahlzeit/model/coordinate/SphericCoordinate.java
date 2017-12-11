@@ -26,15 +26,15 @@ public class SphericCoordinate extends AbstractCoordinate {
     private double longitude;
     private double radius;
 
-    public SphericCoordinate() {
+    public SphericCoordinate() throws IllegalArgumentException {
 	this(SphericCoordinate.DEFAULT_LATITUDE, SphericCoordinate.DEFAULT_LONGITUDE);
     }
 
-    public SphericCoordinate(double latitude, double longitude) {
+    public SphericCoordinate(double latitude, double longitude) throws IllegalArgumentException {
 	this(latitude, longitude, SphericCoordinate.DEFAULT_RADIUS);
     }
 
-    public SphericCoordinate(double latitude, double longitude, double radius) {
+    public SphericCoordinate(double latitude, double longitude, double radius) throws IllegalArgumentException {
 	// precondition
 	assertIsValidLatitude(latitude);
 	assertIsValidLongitude(longitude);
@@ -162,7 +162,9 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     protected void assertIsValidLatitude(double latitude) {
 	assertIsValidDouble(latitude);
-	assert(!(latitude < -90 || latitude > 90 || Double.isNaN(latitude)));
+	if(latitude < -90 || latitude > 90) {
+	    throw new IllegalArgumentException("Latitude is out of range! Value must be between -90 and 90 degree.");
+	};
     }
 
     /**
@@ -171,7 +173,9 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     protected void assertIsValidLongitude(double longitude) throws IllegalArgumentException {
 	assertIsValidDouble(longitude);
-	assert (!(longitude < -180 || longitude > 180 || Double.isNaN(longitude)));
+	if(longitude < -180 || longitude > 180) {
+	    throw new IllegalArgumentException("Longitude is out of range! Value must be between -180 and 180 degree.");
+	}
     }
 
     /**
@@ -180,7 +184,9 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     protected void assertIsValidRadius(double radius) throws IllegalArgumentException {
 	assertIsValidDouble(radius);
-	assert (!(radius < 0 || Double.isNaN(radius)));
+	if(radius < 0) {
+	    throw new IllegalArgumentException("Radius is out of range! Value must be between greater than 0.");
+	};
     }
 
     @Override
