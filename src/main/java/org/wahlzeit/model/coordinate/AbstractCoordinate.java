@@ -2,10 +2,16 @@ package org.wahlzeit.model.coordinate;
 
 public abstract class AbstractCoordinate implements Coordinate {
 
+    /**
+     * @methodtype constructor
+     */
     public AbstractCoordinate() {
 	super();
     }
 
+    /**
+     * @methodtype query
+     */
     @Override
     public boolean equals(Object obj) {
 	// precondition
@@ -20,7 +26,10 @@ public abstract class AbstractCoordinate implements Coordinate {
     public abstract boolean isEqual(Coordinate coordinate);
 
     protected abstract void assertClassInvariants();
-    
+
+    /**
+     * @methodtype query
+     */
     public double getDistance(Coordinate coordinate) {
 	// precondition
 	assertIsNotNull(coordinate);
@@ -28,8 +37,8 @@ public abstract class AbstractCoordinate implements Coordinate {
 	return this.getCartesianDistance(coordinate);
     }
 
-    /*
-     * delegates CartesianDistance to kind class implementation
+    /**
+     * @methodtype query delegates CartesianDistance to kind class implementation
      */
     public double getCartesianDistance(Coordinate coordinate) {
 
@@ -43,8 +52,8 @@ public abstract class AbstractCoordinate implements Coordinate {
 
     public abstract SphericCoordinate asSphericCoordinate();
 
-    /*
-     * delegates SphericDistance to kind class implementation
+    /**
+     * @methodtype query delegates SphericDistance to kind class implementation
      */
     public double getSphericDistance(Coordinate coordinate) {
 
@@ -54,18 +63,25 @@ public abstract class AbstractCoordinate implements Coordinate {
 	return this.asSphericCoordinate().getSphericDistance(coordinate);
     }
 
+    /**
+     * @methodtype assertion
+     */
     public void assertIsNotNull(Object obj) throws IllegalArgumentException {
-	if(obj == null) {
+	if (obj == null) {
 	    throw new IllegalArgumentException("Invalid argument - the given object is null. this is not allowed!");
 	}
 
     }
 
-    public void assertIsValidDouble(double value) throws IllegalArgumentException{
-	if(value==Double.NaN) {
+    /**
+     * @methodtype assertion
+     */
+    public void assertIsValidDouble(double value) throws IllegalArgumentException {
+	if (value == Double.NaN) {
 	    throw new IllegalArgumentException("Invalid argument - the argument must not be NaN");
-	}else if(value == Double.NEGATIVE_INFINITY || value == Double.POSITIVE_INFINITY) {
+	} else if (value == Double.NEGATIVE_INFINITY || value == Double.POSITIVE_INFINITY) {
 	    throw new IllegalArgumentException("Invalid argument - the value should not be infinity");
-	};
+	}
+	;
     }
 }

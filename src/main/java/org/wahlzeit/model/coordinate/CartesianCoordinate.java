@@ -46,12 +46,18 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
     private double y;
     private double z;
 
+    /**
+     * @methodtype constructor
+     */
     public CartesianCoordinate() {
 	this(CartesianCoordinate.DEFAULT_X_COORDINATE, CartesianCoordinate.DEFAULT_Y_COORDINATE,
 		CartesianCoordinate.DEFAULT_Z_COORDINATE);
     }
 
-    public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException{
+    /**
+     * @methodtype constructor
+     */
+    public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
 	// precondition
 	assertClassInvariants();
 	assertIsValidX(x);
@@ -74,8 +80,8 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
     }
 
     /*
-     * (non-Javadoc) converts a cartesian coordinate in a spheric source:
-     * http://keisan.casio.com/exec/system/1359534351
+     * @methodtype query (non-Javadoc) converts a cartesian coordinate in a spheric
+     * source: http://keisan.casio.com/exec/system/1359534351
      */
     @Override
     public SphericCoordinate asSphericCoordinate() throws IllegalArgumentException {
@@ -93,6 +99,9 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
 	return new SphericCoordinate(Math.toDegrees(lat), Math.toDegrees(lng), r);
     }
 
+    /**
+     * @methodtype query
+     */
     @Override
     public double getCartesianDistance(Coordinate coordinate) throws IllegalArgumentException {
 	assertIsNotNull(coordinate);
@@ -103,18 +112,30 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
 		+ Math.pow(this.getZ() - cartCoordinate.getZ(), exponent));
     }
 
+    /**
+     * @methodtype query
+     */
     public double getX() {
 	return this.x;
     }
 
+    /**
+     * @methodtype query
+     */
     public double getY() {
 	return this.y;
     }
 
+    /**
+     * @methodtype query
+     */
     public double getZ() {
 	return this.z;
     }
 
+    /**
+     * @methodtype query
+     */
     @Override
     public int hashCode() {
 	// precondition
@@ -122,8 +143,11 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
 	return Objects.hash(this.getX(), this.getY(), this.getZ());
     }
 
+    /**
+     * @methodtype query
+     */
     @Override
-    public boolean isEqual(Coordinate coordinate){
+    public boolean isEqual(Coordinate coordinate) {
 	if (coordinate != null) {
 	    CartesianCoordinate cartCoordinate = coordinate.asCartesianCoordinate();
 	    return DoubleUtil.isDoubleEqual(this.getX(), cartCoordinate.getX())
@@ -133,48 +157,72 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
 	return false;
     }
 
-    public void setX(double x) throws IllegalArgumentException{
+    /**
+     * @methodtype set
+     * @throws IllegalArgumentException
+     */
+    public void setX(double x) throws IllegalArgumentException {
 	// precondition
 	assertIsValidX(x);
 	this.x = x;
     }
 
-    public void setY(double y) throws IllegalArgumentException{
+    /**
+     * @methodtype set
+     * @throws IllegalArgumentException
+     */
+    public void setY(double y) throws IllegalArgumentException {
 	// precondition
 	assertIsValidY(y);
 	this.y = y;
     }
 
+    /**
+     * @methodtype set
+     * @throws IllegalArgumentException
+     */
     public void setZ(double z) throws IllegalArgumentException {
 	// precondition
 	assertIsValidZ(z);
 	this.z = z;
     }
 
+    /**
+     * @methodtype assertion
+     */
     protected void assertIsValidX(double value) throws IllegalArgumentException {
 	try {
 	    assertIsValidDouble(value);
-	}catch(IllegalArgumentException ex) {
+	} catch (IllegalArgumentException ex) {
 	    throw new IllegalArgumentException("Coordinate invalid X value " + ex.getMessage());
 	}
     }
 
+    /**
+     * @methodtype assertion
+     */
     protected void assertIsValidY(double value) throws IllegalArgumentException {
 	try {
 	    assertIsValidDouble(value);
-	}catch(IllegalArgumentException ex) {
+	} catch (IllegalArgumentException ex) {
 	    throw new IllegalArgumentException("Coordinate invalid Y value " + ex.getMessage());
 	}
     }
 
+    /**
+     * @methodtype assertion
+     */
     protected void assertIsValidZ(double value) throws IllegalArgumentException {
 	try {
 	    assertIsValidDouble(value);
-	}catch(IllegalArgumentException ex) {
+	} catch (IllegalArgumentException ex) {
 	    throw new IllegalArgumentException("Coordinate invalid Z value " + ex.getMessage());
 	}
     }
 
+    /**
+     * @methodtype assertion
+     */
     @Override
     protected void assertClassInvariants() {
 	assertIsNotNull(this);

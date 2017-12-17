@@ -13,6 +13,10 @@ import com.googlecode.objectify.annotation.Subclass;
  * @author dmkif
  *
  */
+/**
+ * @author dmkif
+ *
+ */
 @Subclass
 public class SphericCoordinate extends AbstractCoordinate {
 
@@ -26,14 +30,23 @@ public class SphericCoordinate extends AbstractCoordinate {
     private double longitude;
     private double radius;
 
+    /**
+     * @methodtype constructor
+     */
     public SphericCoordinate() throws IllegalArgumentException {
 	this(SphericCoordinate.DEFAULT_LATITUDE, SphericCoordinate.DEFAULT_LONGITUDE);
     }
 
+    /**
+     * @methodtype constructor
+     */
     public SphericCoordinate(double latitude, double longitude) throws IllegalArgumentException {
 	this(latitude, longitude, SphericCoordinate.DEFAULT_RADIUS);
     }
 
+    /**
+     * @methodtype constructor
+     */
     public SphericCoordinate(double latitude, double longitude, double radius) throws IllegalArgumentException {
 	// precondition
 	assertIsValidLatitude(latitude);
@@ -48,9 +61,9 @@ public class SphericCoordinate extends AbstractCoordinate {
 	assertClassInvariants();
     }
 
-    /*
-     * transform a SphericCoordinate as a CartesianCoordinate source:
-     * http://keisan.casio.com/exec/system/1359534351
+    /**
+     * @methodtype query transform a SphericCoordinate as a CartesianCoordinate
+     *             source: http://keisan.casio.com/exec/system/1359534351
      */
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
@@ -64,28 +77,37 @@ public class SphericCoordinate extends AbstractCoordinate {
 	return new CartesianCoordinate(x, y, z);
     }
 
-    /*
-     * return this object as it is ;-)
+    /**
+     * @methodtype query
      */
     @Override
     public SphericCoordinate asSphericCoordinate() {
 	return this;
     }
 
+    /**
+     * @methodtype query
+     */
     public double getLatitude() {
 	return this.latitude;
     }
 
+    /**
+     * @methodtype query
+     */
     public double getLongitude() {
 	return this.longitude;
     }
 
+    /**
+     * @methodtype query
+     */
     public double getRadius() {
 	return this.radius;
     }
 
-    /*
-     * calculate the difference between to spheric coordinates.
+    /**
+     * @methodtype query calculate the difference between to spheric coordinates.
      *
      */
     @Override
@@ -114,15 +136,18 @@ public class SphericCoordinate extends AbstractCoordinate {
 	return distanceInKM;
     }
 
+    /**
+     * @methodtype query
+     */
     @Override
     public int hashCode() {
-	//precondition
+	// precondition
 	assertClassInvariants();
 	return Objects.hash(this.getLatitude(), this.getLongitude(), this.getRadius());
     }
 
-    /*
-     * check if is equal and convert if necessary
+    /**
+     * @methodtype query check if is equal and convert if necessary
      */
     @Override
     public boolean isEqual(Coordinate coordinate) {
@@ -135,6 +160,9 @@ public class SphericCoordinate extends AbstractCoordinate {
 		&& DoubleUtil.isDoubleEqual(this.getRadius(), spherCoordinate.getRadius());
     }
 
+    /**
+     * @methodtype set
+     */
     public void setLatitude(double latitude) {
 	// precondition
 	assertIsNotNull(latitude);
@@ -142,6 +170,9 @@ public class SphericCoordinate extends AbstractCoordinate {
 	this.latitude = latitude;
     }
 
+    /**
+     * @methodtype set
+     */
     public void setLongitude(double longitude) {
 	// precondition
 	assertIsNotNull(longitude);
@@ -149,6 +180,9 @@ public class SphericCoordinate extends AbstractCoordinate {
 	this.longitude = longitude;
     }
 
+    /**
+     * @methodtype set
+     */
     public void setRadius(double radius) {
 	// precondition
 	assertIsNotNull(radius);
@@ -162,9 +196,10 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     protected void assertIsValidLatitude(double latitude) {
 	assertIsValidDouble(latitude);
-	if(latitude < -90 || latitude > 90) {
+	if (latitude < -90 || latitude > 90) {
 	    throw new IllegalArgumentException("Latitude is out of range! Value must be between -90 and 90 degree.");
-	};
+	}
+	;
     }
 
     /**
@@ -173,7 +208,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     protected void assertIsValidLongitude(double longitude) throws IllegalArgumentException {
 	assertIsValidDouble(longitude);
-	if(longitude < -180 || longitude > 180) {
+	if (longitude < -180 || longitude > 180) {
 	    throw new IllegalArgumentException("Longitude is out of range! Value must be between -180 and 180 degree.");
 	}
     }
@@ -184,11 +219,15 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     protected void assertIsValidRadius(double radius) throws IllegalArgumentException {
 	assertIsValidDouble(radius);
-	if(radius < 0) {
+	if (radius < 0) {
 	    throw new IllegalArgumentException("Radius is out of range! Value must be between greater than 0.");
-	};
+	}
+	;
     }
 
+    /**
+     * @methodtype assertion
+     */
     @Override
     protected void assertClassInvariants() {
 	assertIsNotNull(this);
