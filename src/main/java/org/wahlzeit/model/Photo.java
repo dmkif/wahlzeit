@@ -163,7 +163,7 @@ public class Photo extends DataObject {
 		id = myId;
 
 		incWriteCount();
-		this.setLocation(new Location(new CartesianCoordinate(0,0,0)));
+		this.setLocation(new Location());
 	}
 
 	/**

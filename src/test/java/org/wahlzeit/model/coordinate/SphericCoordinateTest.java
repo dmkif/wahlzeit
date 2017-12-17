@@ -26,12 +26,12 @@ public class SphericCoordinateTest {
     @Before
     public void setUp() throws Exception {
 
-	sphericCoord = new SphericCoordinate(49.597675, 12.273710, SphericCoordinate.DEFAULT_RADIUS);
-	sphericOtherCoord = new SphericCoordinate(33.058975, -111.244683, SphericCoordinate.DEFAULT_RADIUS);
+	sphericCoord = SphericCoordinate.getInstance(49.597675, 12.273710, SphericCoordinate.DEFAULT_RADIUS);
+	sphericOtherCoord = SphericCoordinate.getInstance(33.058975, -111.244683, SphericCoordinate.DEFAULT_RADIUS);
 
-	cartesianCoord = new CartesianCoordinate(4762.6374858, 926.9484737, 4129.8385845);
-	cartesianOtherCoord = new CartesianCoordinate(-1664.1323845, -3567.1235456, 5679.1234567);
-	cartesianPrimitivCoord = new CartesianCoordinate(1000, 1000, 1000);
+	cartesianCoord = CartesianCoordinate.getInstance(4762.6374858, 926.9484737, 4129.8385845);
+	cartesianOtherCoord = CartesianCoordinate.getInstance(-1664.1323845, -3567.1235456, 5679.1234567);
+	cartesianPrimitivCoord = CartesianCoordinate.getInstance(1000, 1000, 1000);
     }
 
     /**
@@ -41,7 +41,7 @@ public class SphericCoordinateTest {
     public void testHashCode() {
 	assertEquals(sphericCoord.hashCode(), sphericCoord.asCartesianCoordinate().asSphericCoordinate().hashCode());
 	assertEquals(sphericCoord.hashCode(),
-		new SphericCoordinate(sphericCoord.getLatitude(), sphericCoord.getLongitude(), sphericCoord.getRadius())
+		SphericCoordinate.getInstance(sphericCoord.getLatitude(), sphericCoord.getLongitude(), sphericCoord.getRadius())
 			.hashCode());
 	assertNotEquals(sphericCoord.hashCode(), sphericCoord.asCartesianCoordinate().hashCode());
 	assertNotEquals(sphericCoord, cartesianCoord.asSphericCoordinate());
@@ -52,22 +52,22 @@ public class SphericCoordinateTest {
      */
     @Test
     public void testSphericCoordinate() {
-	assertEquals(SphericCoordinate.class, new SphericCoordinate().getClass());
-	assertEquals(SphericCoordinate.class, new SphericCoordinate(1.11, 3.33).getClass());
-	assertEquals(SphericCoordinate.class, new SphericCoordinate(1.11, 3.33, 4.44).getClass());
+	assertEquals(SphericCoordinate.class, SphericCoordinate.getInstance().getClass());
+	assertEquals(SphericCoordinate.class, SphericCoordinate.getInstance(1.11, 3.33).getClass());
+	assertEquals(SphericCoordinate.class, SphericCoordinate.getInstance(1.11, 3.33, 4.44).getClass());
 	try {
-	    new SphericCoordinate(-12345.0013, 0.00);
+	    SphericCoordinate.getInstance(-12345.0013, 0.00);
 	    fail();
 	} catch (IllegalArgumentException ex) {
 	}
 
 	try {
-	    new SphericCoordinate(49.00, -192.00);
+	    SphericCoordinate.getInstance(49.00, -192.00);
 	    fail();
 	} catch (IllegalArgumentException ex) {
 	}
 	try {
-	    new SphericCoordinate(90.00, -180.00, -10.00);
+	    SphericCoordinate.getInstance(90.00, -180.00, -10.00);
 	    fail();
 	} catch (IllegalArgumentException ex) {
 	}
@@ -154,7 +154,7 @@ public class SphericCoordinateTest {
     public void testGetLatitude() {
 	assertFalse(DoubleUtil.isDoubleEqual(TESTVALUE, sphericCoord.getLatitude()));
 
-	sphericCoord = new SphericCoordinate(TESTVALUE, 0.0);
+	sphericCoord = SphericCoordinate.getInstance(TESTVALUE, 0.0);
 	assertTrue(DoubleUtil.isDoubleEqual(TESTVALUE, sphericCoord.getLatitude()));
     }
 
@@ -166,7 +166,7 @@ public class SphericCoordinateTest {
     public void testGetLongitude() {
 	assertFalse(DoubleUtil.isDoubleEqual(TESTVALUE, sphericCoord.getLongitude()));
 
-	sphericCoord = new SphericCoordinate(0.0, TESTVALUE);
+	sphericCoord = SphericCoordinate.getInstance(0.0, TESTVALUE);
 	assertTrue(DoubleUtil.isDoubleEqual(TESTVALUE, sphericCoord.getLongitude()));
     }
 
@@ -178,7 +178,7 @@ public class SphericCoordinateTest {
     public void testGetRadius() {
 	assertFalse(DoubleUtil.isDoubleEqual(TESTVALUE, sphericCoord.getRadius()));
 
-	sphericCoord = new SphericCoordinate(0.0, 0.0, TESTVALUE);
+	sphericCoord = SphericCoordinate.getInstance(0.0, 0.0, TESTVALUE);
 	assertTrue(DoubleUtil.isDoubleEqual(TESTVALUE, sphericCoord.getRadius()));
     }
 
@@ -206,9 +206,19 @@ public class SphericCoordinateTest {
 	CartesianCoordinate tmpCoordinate = sphericCoord.asCartesianCoordinate();
 	assertTrue(sphericCoord.isEqual(sphericCoord));
 	assertTrue(sphericCoord
-		.isEqual(new CartesianCoordinate(tmpCoordinate.getX(), tmpCoordinate.getY(), tmpCoordinate.getZ())));
+		.isEqual(CartesianCoordinate.getInstance(tmpCoordinate.getX(), tmpCoordinate.getY(), tmpCoordinate.getZ())));
 	assertFalse(sphericCoord.isEqual(sphericOtherCoord));
 	assertFalse(sphericOtherCoord.isEqual(sphericOtherCoord.asCartesianCoordinate()));
+    }
+    
+    public void testGetInstance() 
+    {
+	SphericCoordinate firstTempTestCoordinate = SphericCoordinate.getInstance(sphericCoord.getLatitude(), sphericCoord.getLongitude(), sphericCoord.getRadius());
+	//check if address of objects is equals
+	assertTrue(sphericCoord==firstTempTestCoordinate);
+	assertTrue(sphericCoord==firstTempTestCoordinate.asSphericCoordinate().asCartesianCoordinate().asSphericCoordinate());
+	assertFalse(sphericCoord!=(Coordinate)firstTempTestCoordinate.asSphericCoordinate());
+	assertFalse(sphericCoord==sphericOtherCoord);
     }
 
 }

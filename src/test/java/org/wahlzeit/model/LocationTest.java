@@ -41,7 +41,7 @@ public class LocationTest {
      */
     @Test
     public void testLocation() {
-	assertNotNull(new Location(new CartesianCoordinate(0,0,0)));
+	assertNotNull(new Location(CartesianCoordinate.getInstance(0,0,0)));
     }
     
     @Test(expected=IllegalArgumentException.class)
@@ -54,9 +54,9 @@ public class LocationTest {
      */
     @Test
     public void testGetCoordinate() {
-	CartesianCoordinate testCoordinate = new CartesianCoordinate(0,0,0);
+	CartesianCoordinate testCoordinate = CartesianCoordinate.getInstance(0,0,0);
 	Location withZeroPointCoordinateLocation = new Location(testCoordinate);
-	Location withNullCoordinateLocation = new Location(new CartesianCoordinate(0.0001,0.0,0.000));
+	Location withNullCoordinateLocation = new Location(CartesianCoordinate.getInstance(0.0001,0.0,0.000));
 	
 	assertSame(testCoordinate, withZeroPointCoordinateLocation.getCoordinate());
 	assertNotNull(withNullCoordinateLocation.getCoordinate());
@@ -68,7 +68,7 @@ public class LocationTest {
      */
     @Test
     public void testSetCoordinate() {
-	CartesianCoordinate testCoordinate = new CartesianCoordinate(0,0,0);
+	CartesianCoordinate testCoordinate = CartesianCoordinate.getInstance(0,0,0);
 	Location testLocation = new Location(testCoordinate);
 	
 	assertSame(testCoordinate, testLocation.getCoordinate());
@@ -89,22 +89,22 @@ public class LocationTest {
      */
     @Test
     public void testEqualsObject() {
-	CartesianCoordinate testCoordinate = new CartesianCoordinate(0,0,0);
+	CartesianCoordinate testCoordinate = CartesianCoordinate.getInstance(0,0,0);
 	Location firstTestLocation = new Location(testCoordinate);
 	Location secondTestLocation = new Location(testCoordinate);
 	
 	assertTrue(firstTestLocation.equals(secondTestLocation));
 	
-	secondTestLocation.setCoordinate(new CartesianCoordinate(1,1,1));
+	secondTestLocation.setCoordinate(CartesianCoordinate.getInstance(1,1,1));
 	assertFalse(firstTestLocation.equals(secondTestLocation));
 	
-	firstTestLocation.setCoordinate(new CartesianCoordinate(1,1,1));
+	firstTestLocation.setCoordinate(CartesianCoordinate.getInstance(1,1,1));
 	assertTrue(firstTestLocation.equals(secondTestLocation));
 	
     }
     
     public void testHashCode() {
-	CartesianCoordinate testCoordinate = new CartesianCoordinate(0,0,0);
+	CartesianCoordinate testCoordinate = CartesianCoordinate.getInstance(0,0,0);
 	Location firstTestLocation = new Location(testCoordinate);
 	Location secondTestLocation = new Location(testCoordinate);
 	

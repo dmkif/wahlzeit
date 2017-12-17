@@ -27,8 +27,6 @@ package org.wahlzeit.model.coordinate;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.wahlzeit.model.coordinate.CartesianCoordinate;
 import org.wahlzeit.utils.DoubleUtil;
@@ -37,12 +35,12 @@ public class CartesianCoordinateTest {
 
     private static final double TESTVALUE = 13.37;
 
-    private static CartesianCoordinate firstTestCoordinate = new CartesianCoordinate(0, 0, 0);
-    private static CartesianCoordinate secondTestCoordinate = new CartesianCoordinate(0, 0, 1);
-    private static CartesianCoordinate thirdTestCoordinate = new CartesianCoordinate(0, 1, 0);
-    private static CartesianCoordinate fourthTestCoordinate = new CartesianCoordinate(1, 0, 0);
-    private static CartesianCoordinate fifthTestCoordinate = new CartesianCoordinate(0, 1, 1);
-    private static CartesianCoordinate sixthTestCoordinate = new CartesianCoordinate(1, 1, 1);
+    private static CartesianCoordinate firstTestCoordinate = CartesianCoordinate.getInstance(0, 0, 0);
+    private static CartesianCoordinate secondTestCoordinate = CartesianCoordinate.getInstance(0, 0, 1);
+    private static CartesianCoordinate thirdTestCoordinate = CartesianCoordinate.getInstance(0, 1, 0);
+    private static CartesianCoordinate fourthTestCoordinate = CartesianCoordinate.getInstance(1, 0, 0);
+    private static CartesianCoordinate fifthTestCoordinate = CartesianCoordinate.getInstance(0, 1, 1);
+    private static CartesianCoordinate sixthTestCoordinate = CartesianCoordinate.getInstance(1, 1, 1);
 
     @Test
     public void testGetDistance() {
@@ -72,23 +70,23 @@ public class CartesianCoordinateTest {
     @Test
     public void testIsEqual() {
 	assertTrue(firstTestCoordinate.isEqual(firstTestCoordinate));
-	assertTrue(firstTestCoordinate.isEqual(new CartesianCoordinate(0, 0, 0)));
+	assertTrue(firstTestCoordinate.isEqual(CartesianCoordinate.getInstance(0, 0, 0)));
 	assertTrue(firstTestCoordinate
-		.isEqual(new CartesianCoordinate(DoubleUtil.DELTA / 10, DoubleUtil.DELTA / 10, DoubleUtil.DELTA / 10)));
+		.isEqual(CartesianCoordinate.getInstance(DoubleUtil.DELTA / 10, DoubleUtil.DELTA / 10, DoubleUtil.DELTA / 10)));
 	assertFalse(secondTestCoordinate.isEqual(firstTestCoordinate));
-	assertFalse(secondTestCoordinate.isEqual(new CartesianCoordinate(1, 1, 1)));
+	assertFalse(secondTestCoordinate.isEqual(CartesianCoordinate.getInstance(1, 1, 1)));
 	assertFalse(firstTestCoordinate.isEqual(null));
 	assertFalse(firstTestCoordinate
-		.isEqual(new CartesianCoordinate(DoubleUtil.DELTA, DoubleUtil.DELTA, DoubleUtil.DELTA)));
+		.isEqual(CartesianCoordinate.getInstance(DoubleUtil.DELTA, DoubleUtil.DELTA, DoubleUtil.DELTA)));
 
     }
 
     @Test
     public void testEquals() {
-	CartesianCoordinate firstTempTestCoordinate = new CartesianCoordinate(0, 0, 0);
-	CartesianCoordinate secondTempTestCoordinate = new CartesianCoordinate(-10, 1, -1337);
-	CartesianCoordinate thirdTempTestCoordinate = new CartesianCoordinate(1.1, 0, 1957);
-	CartesianCoordinate fourthTempTestCoordinate = new CartesianCoordinate(1.1, 0, 1957);
+	CartesianCoordinate firstTempTestCoordinate = CartesianCoordinate.getInstance(0, 0, 0);
+	CartesianCoordinate secondTempTestCoordinate = CartesianCoordinate.getInstance(-10, 1, -1337);
+	CartesianCoordinate thirdTempTestCoordinate = CartesianCoordinate.getInstance(1.1, 0, 1957);
+	CartesianCoordinate fourthTempTestCoordinate = CartesianCoordinate.getInstance(1.1, 0, 1957);
 	assertTrue(firstTestCoordinate.equals(firstTestCoordinate));
 	assertTrue(firstTempTestCoordinate.equals(firstTestCoordinate));
 	assertTrue(thirdTempTestCoordinate.equals(fourthTempTestCoordinate));
@@ -103,31 +101,31 @@ public class CartesianCoordinateTest {
 
     @Test
     public void testXCoordinate() {
-	CartesianCoordinate firstTempTestCoordinate = new CartesianCoordinate(0, 0, 0);
+	CartesianCoordinate firstTempTestCoordinate = CartesianCoordinate.getInstance(0, 0, 0);
 	assertEquals(0, firstTempTestCoordinate.getX(), DoubleUtil.DELTA);
-	firstTempTestCoordinate = new CartesianCoordinate(TESTVALUE, 0, 0);
+	firstTempTestCoordinate = CartesianCoordinate.getInstance(TESTVALUE, 0, 0);
 	assertEquals(TESTVALUE, firstTempTestCoordinate.getX(), DoubleUtil.DELTA);
     }
 
     @Test
     public void testYCoordinate() {
-	CartesianCoordinate firstTempTestCoordinate = new CartesianCoordinate(0, 0, 0);
+	CartesianCoordinate firstTempTestCoordinate = CartesianCoordinate.getInstance(0, 0, 0);
 	assertEquals(0, firstTempTestCoordinate.getY(), DoubleUtil.DELTA);
-	firstTempTestCoordinate = new CartesianCoordinate(0, TESTVALUE, 0);
+	firstTempTestCoordinate = CartesianCoordinate.getInstance(0, TESTVALUE, 0);
 	assertEquals(TESTVALUE, firstTempTestCoordinate.getY(), DoubleUtil.DELTA);
     }
 
     @Test
     public void testZCoordinate() {
-	CartesianCoordinate firstTempTestCoordinate = new CartesianCoordinate(0, 0, 0);
+	CartesianCoordinate firstTempTestCoordinate = CartesianCoordinate.getInstance(0, 0, 0);
 	assertEquals(0, firstTempTestCoordinate.getZ(), DoubleUtil.DELTA);
-	firstTempTestCoordinate = new CartesianCoordinate(0, 0, TESTVALUE);
+	firstTempTestCoordinate = CartesianCoordinate.getInstance(0, 0, TESTVALUE);
 	assertEquals(TESTVALUE, firstTempTestCoordinate.getZ(), DoubleUtil.DELTA);
     }
 
     @Test
     public void testHashCode() {
-	assertEquals(firstTestCoordinate.hashCode(), (new CartesianCoordinate(firstTestCoordinate.getX(),
+	assertEquals(firstTestCoordinate.hashCode(), (CartesianCoordinate.getInstance(firstTestCoordinate.getX(),
 		firstTestCoordinate.getY(), firstTestCoordinate.getZ()).hashCode()));
 	assertNotEquals(firstTestCoordinate.hashCode(), secondTestCoordinate.hashCode());
     }
@@ -140,6 +138,16 @@ public class CartesianCoordinateTest {
     @Test(expected = IllegalArgumentException.class)
     public void testExceptiongetDistance() {
 	firstTestCoordinate.getDistance(null);
+    }
+    
+    public void testGetInstance() 
+    {
+	CartesianCoordinate firstTempTestCoordinate = CartesianCoordinate.getInstance(firstTestCoordinate.getX(), firstTestCoordinate.getY(), firstTestCoordinate.getZ());
+	//check if address of objects is equals
+	assertTrue(firstTestCoordinate==firstTempTestCoordinate);
+	assertTrue(firstTestCoordinate==firstTempTestCoordinate.asSphericCoordinate().asCartesianCoordinate());
+	assertFalse(firstTestCoordinate!=(Coordinate)firstTempTestCoordinate.asSphericCoordinate());
+	assertFalse(firstTestCoordinate==secondTestCoordinate);
     }
 
 }

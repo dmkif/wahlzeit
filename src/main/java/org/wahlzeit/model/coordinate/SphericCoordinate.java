@@ -3,6 +3,7 @@
  */
 package org.wahlzeit.model.coordinate;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import org.wahlzeit.utils.DoubleUtil;
@@ -25,22 +26,19 @@ public class SphericCoordinate extends AbstractCoordinate {
     static final double DEFAULT_LONGITUDE = 0.0;
 
     static final double DEFAULT_RADIUS = 6371.0; // km
+    
+    private final static HashMap<Integer, SphericCoordinate> coordinateMap = new HashMap<>();
 
-    private double latitude;
-    private double longitude;
-    private double radius;
+    private final double latitude;
+    private final double longitude;
+    private final double radius;
 
-    /**
-     * @methodtype constructor
-     */
-    public SphericCoordinate() throws IllegalArgumentException {
-	this(SphericCoordinate.DEFAULT_LATITUDE, SphericCoordinate.DEFAULT_LONGITUDE);
-    }
+
 
     /**
      * @methodtype constructor
      */
-    public SphericCoordinate(double latitude, double longitude) throws IllegalArgumentException {
+    private SphericCoordinate(double latitude, double longitude) throws IllegalArgumentException {
 	this(latitude, longitude, SphericCoordinate.DEFAULT_RADIUS);
     }
 
@@ -61,12 +59,44 @@ public class SphericCoordinate extends AbstractCoordinate {
 	assertClassInvariants();
     }
 
+    
+    /**
+     * @methodtype helper
+     */
+    public static SphericCoordinate getInstance(double latitude, double longitude, double radius) {
+	SphericCoordinate tempCoordinate = new SphericCoordinate(latitude, longitude, radius);
+	
+	if(!coordinateMap.containsKey(tempCoordinate.hashCode())) {
+	    synchronized(coordinateMap) {
+		if(!coordinateMap.containsKey(tempCoordinate.hashCode())) {
+		    coordinateMap.put(tempCoordinate.hashCode(), tempCoordinate);
+		}
+	    }
+	}
+	return coordinateMap.get(tempCoordinate.hashCode());
+    }
+    
+    /**
+     * @methodtype helper
+     */
+    public static SphericCoordinate getInstance(double latitude, double longitude) {
+	return getInstance(latitude, longitude, DEFAULT_RADIUS);
+    }
+    
+    /**
+     * @methodtype helper
+     */
+    public static SphericCoordinate getInstance() {
+	return getInstance(DEFAULT_LATITUDE, DEFAULT_LONGITUDE, DEFAULT_RADIUS);
+    }
+    
     /**
      * @methodtype query transform a SphericCoordinate as a CartesianCoordinate
      *             source: http://keisan.casio.com/exec/system/1359534351
      */
     @Override
     public CartesianCoordinate asCartesianCoordinate() {
+	assertClassInvariants();
 	double radLatitude = Math.toRadians(this.getLatitude());
 	double radLongitude = Math.toRadians(this.getLongitude());
 
@@ -74,7 +104,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 	double y = this.getRadius() * Math.sin(radLatitude) * Math.sin(radLongitude);
 	double z = this.getRadius() * Math.cos(radLongitude);
 
-	return new CartesianCoordinate(x, y, z);
+	return CartesianCoordinate.getInstance(x, y, z);
     }
 
     /**
@@ -82,6 +112,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
     @Override
     public SphericCoordinate asSphericCoordinate() {
+	assertClassInvariants();
 	return this;
     }
 
@@ -147,7 +178,8 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
 
     /**
-     * @methodtype query check if is equal and convert if necessary
+     * @methodtype query 
+     * check if is equal and convert if necessary
      */
     @Override
     public boolean isEqual(Coordinate coordinate) {
@@ -161,38 +193,9 @@ public class SphericCoordinate extends AbstractCoordinate {
     }
 
     /**
-     * @methodtype set
-     */
-    public void setLatitude(double latitude) {
-	// precondition
-	assertIsNotNull(latitude);
-	assertIsValidLatitude(latitude);
-	this.latitude = latitude;
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setLongitude(double longitude) {
-	// precondition
-	assertIsNotNull(longitude);
-	assertIsValidLongitude(longitude);
-	this.longitude = longitude;
-    }
-
-    /**
-     * @methodtype set
-     */
-    public void setRadius(double radius) {
-	// precondition
-	assertIsNotNull(radius);
-	assertIsValidRadius(radius);
-	this.radius = radius;
-    }
-
-    /**
      * @throws CoordinateParameterException
-     * @methodtype assertion inpspired by: https://github.com/Snengl/wahlzeit
+     * @methodtype assertion 
+     * inpspired by: https://github.com/Snengl/wahlzeit
      */
     protected void assertIsValidLatitude(double latitude) {
 	assertIsValidDouble(latitude);
@@ -204,7 +207,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 
     /**
      * @throws CoordinateParameterException
-     * @methodtype assertion inpspired by: https://github.com/Snengl/wahlzeit
+     * @methodtype assertion 
+     * inpspired by: https://github.com/Snengl/wahlzeit
      */
     protected void assertIsValidLongitude(double longitude) throws IllegalArgumentException {
 	assertIsValidDouble(longitude);
@@ -215,7 +219,8 @@ public class SphericCoordinate extends AbstractCoordinate {
 
     /**
      * @throws CoordinateParameterException
-     * @methodtype assertion inpspired by: https://github.com/Snengl/wahlzeit
+     * @methodtype assertion 
+     * inpspired by: https://github.com/Snengl/wahlzeit
      */
     protected void assertIsValidRadius(double radius) throws IllegalArgumentException {
 	assertIsValidDouble(radius);

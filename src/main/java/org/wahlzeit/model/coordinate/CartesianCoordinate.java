@@ -26,6 +26,7 @@
  */
 package org.wahlzeit.model.coordinate;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import org.wahlzeit.utils.DoubleUtil;
@@ -41,15 +42,16 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
 
     public static final double DEFAULT_Z_COORDINATE = 0.0;
 
-    private double x;
-
-    private double y;
-    private double z;
+    private final static HashMap<Integer, CartesianCoordinate> coordinateMap = new HashMap<>();
+    
+    private final double x;
+    private final double y;
+    private final double z;
 
     /**
      * @methodtype constructor
      */
-    public CartesianCoordinate() {
+    private CartesianCoordinate() {
 	this(CartesianCoordinate.DEFAULT_X_COORDINATE, CartesianCoordinate.DEFAULT_Y_COORDINATE,
 		CartesianCoordinate.DEFAULT_Z_COORDINATE);
     }
@@ -57,16 +59,15 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
     /**
      * @methodtype constructor
      */
-    public CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
+    private CartesianCoordinate(double x, double y, double z) throws IllegalArgumentException {
 	// precondition
-	assertClassInvariants();
 	assertIsValidX(x);
 	assertIsValidY(y);
 	assertIsValidZ(z);
 
-	this.setX(x);
-	this.setY(y);
-	this.setZ(z);
+	this.x = x;
+	this.y = y;
+	this.z = z;
 
 	// postcondition
 	assertClassInvariants();
@@ -77,6 +78,22 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
 	// precondition
 	assertClassInvariants();
 	return this;
+    }
+    
+    /**
+     * @methodtype helper
+     */
+    public static CartesianCoordinate getInstance(double x, double y, double z) {
+	CartesianCoordinate tempCoordinate = new CartesianCoordinate(x, y, z);
+	
+	if(!coordinateMap.containsKey(tempCoordinate.hashCode())) {
+	    synchronized(coordinateMap) {
+		if(!coordinateMap.containsKey(tempCoordinate.hashCode())) {
+		    coordinateMap.put(tempCoordinate.hashCode(), tempCoordinate);
+		}
+	    }
+	}
+	return coordinateMap.get(tempCoordinate.hashCode());
     }
 
     /*
@@ -155,36 +172,6 @@ public class CartesianCoordinate extends AbstractCoordinate implements Coordinat
 		    && DoubleUtil.isDoubleEqual(this.getZ(), cartCoordinate.getZ());
 	}
 	return false;
-    }
-
-    /**
-     * @methodtype set
-     * @throws IllegalArgumentException
-     */
-    public void setX(double x) throws IllegalArgumentException {
-	// precondition
-	assertIsValidX(x);
-	this.x = x;
-    }
-
-    /**
-     * @methodtype set
-     * @throws IllegalArgumentException
-     */
-    public void setY(double y) throws IllegalArgumentException {
-	// precondition
-	assertIsValidY(y);
-	this.y = y;
-    }
-
-    /**
-     * @methodtype set
-     * @throws IllegalArgumentException
-     */
-    public void setZ(double z) throws IllegalArgumentException {
-	// precondition
-	assertIsValidZ(z);
-	this.z = z;
     }
 
     /**
