@@ -1,5 +1,11 @@
 package org.wahlzeit.model.coordinate;
 
+import org.wahlzeit.utils.DesignPattern;
+
+@DesignPattern(
+	name = "Template",
+	participants = {"Coordinate", "CartesianCoordinate", "SphericCoordinate"}
+)
 public abstract class AbstractCoordinate implements Coordinate {
 
     /**

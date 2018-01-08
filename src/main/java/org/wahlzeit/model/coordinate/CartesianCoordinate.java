@@ -29,10 +29,15 @@ package org.wahlzeit.model.coordinate;
 import java.util.HashMap;
 import java.util.Objects;
 
+import org.wahlzeit.utils.DesignPattern;
 import org.wahlzeit.utils.DoubleUtil;
 
 import com.googlecode.objectify.annotation.Subclass;
 
+@DesignPattern(
+	name = "Singleton",
+	participants = {"CartesianCoordinate"}
+)
 @Subclass
 public class CartesianCoordinate extends AbstractCoordinate implements Coordinate {
 
