@@ -29,7 +29,7 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 
 /**
- * Testsuite for package org.wahlzeit.utils
+ * Testsuite for package org.wahlzeit.model
  */
 
 @RunWith(Suite.class)
@@ -45,7 +45,8 @@ import org.junit.runners.*;
 	org.wahlzeit.model.PhotoFilterTest.class,
 	org.wahlzeit.model.TagsTest.class,
 	org.wahlzeit.model.UserStatusTest.class,
-	org.wahlzeit.model.ValueTest.class	
+	org.wahlzeit.model.ValueTest.class,
+	org.wahlzeit.model.mainframe.MainframeTestSuite.class
 })
 /**
  * @author dmkif

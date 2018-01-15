@@ -23,10 +23,14 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
-package org.wahlzeit.model;
+package org.wahlzeit.model.mainframe;
 
 import java.util.logging.Logger;
 
+import org.wahlzeit.model.Location;
+import org.wahlzeit.model.Photo;
+import org.wahlzeit.model.PhotoFactory;
+import org.wahlzeit.model.PhotoId;
 import org.wahlzeit.services.LogBuilder;
 
 /**
@@ -54,12 +58,12 @@ public class MainframePhotoFactory extends PhotoFactory {
 	/**
 	 * Public singleton access method.
 	 */
-	public static synchronized MainframePhotoFactory getInstance() {
+	public static synchronized PhotoFactory getInstance() {
 		if (instance == null) {
 			log.config(LogBuilder.createSystemMessage().addAction("setting mainframe PhotoFactory").toString());
 			setInstance(new MainframePhotoFactory());
 		}
-		return (MainframePhotoFactory)instance;
+		return instance;
 	}
 
 	/**
@@ -88,4 +92,12 @@ public class MainframePhotoFactory extends PhotoFactory {
 	public Photo createPhoto(PhotoId id) {
 		return new MainframePhoto(id);
 	}
+	
+	/**
+	 * @methodtype factory
+	 */
+	public Photo createPhoto(PhotoId id, Location location) {
+	    return new MainframePhoto(id, location);
+	}
+	
 }

@@ -23,12 +23,19 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
-package org.wahlzeit.model;
+package org.wahlzeit.model.mainframe;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.wahlzeit.model.Photo;
+import org.wahlzeit.model.PhotoFactory;
 import org.wahlzeit.testEnvironmentProvider.LocalDatastoreServiceTestConfigProvider;
 
 /**
@@ -50,7 +57,7 @@ public class MainframePhotoFactoryTest extends LocalDatastoreServiceTestConfigPr
      */
     @Test
     public void testCreatePhoto() {
-	assertSame(MainframePhoto.class, MainframePhotoFactory.getInstance().createPhoto().getClass());
+	assertThat(MainframePhotoFactory.getInstance().createPhoto(), instanceOf(Photo.class));
     }
 
     /**

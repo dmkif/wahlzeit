@@ -23,7 +23,7 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
-package org.wahlzeit.model;
+package org.wahlzeit.model.mainframe;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -33,6 +33,9 @@ import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.wahlzeit.model.mainframe.MainframeManager;
+import org.wahlzeit.model.mainframe.MainframePhoto;
+import org.wahlzeit.model.mainframe.MainframeType;
 import org.wahlzeit.testEnvironmentProvider.LocalDatastoreServiceTestConfigProvider;
 
 /**
@@ -50,7 +53,7 @@ public class MainframePhotoTest extends LocalDatastoreServiceTestConfigProvider{
 	super.before();
 	defaultValuePhoto = new MainframePhoto();
 	notInitalisedPhoto = null;
-	valuesSetPhoto = new MainframePhoto(10, "WahlZeit");
+	valuesSetPhoto = new MainframePhoto(10, "WahlZeit", "WahlZeitModel");
     }
     /**
      * Test method for {@link org.wahlzeit.model.MainframePhoto#MainframePhoto()}.
@@ -67,14 +70,14 @@ public class MainframePhotoTest extends LocalDatastoreServiceTestConfigProvider{
      */
     @Test
     public void testGetMillionInstructionsPerSecond() {
-	assertEquals(0,defaultValuePhoto.getMillionInstructionsPerSecond());
-	assertEquals(10,valuesSetPhoto.getMillionInstructionsPerSecond());
+	assertEquals(1,defaultValuePhoto.getMainframe().getMillionInstructionsPerSecond());
+	assertEquals(10,valuesSetPhoto.getMainframe().getMillionInstructionsPerSecond());
 	
-	defaultValuePhoto.setMillionInstructionsPerSecond(1337);
-	valuesSetPhoto.setMillionInstructionsPerSecond(1337);
+	defaultValuePhoto.getMainframe().setMillionInstructionsPerSecond(1337);
+	valuesSetPhoto.getMainframe().setMillionInstructionsPerSecond(1337);
 	
-	assertEquals(1337,defaultValuePhoto.getMillionInstructionsPerSecond());
-	assertEquals(1337,defaultValuePhoto.getMillionInstructionsPerSecond());
+	assertEquals(1337,defaultValuePhoto.getMainframe().getMillionInstructionsPerSecond());
+	assertEquals(1337,defaultValuePhoto.getMainframe().getMillionInstructionsPerSecond());
     }
 
     /**
@@ -82,9 +85,9 @@ public class MainframePhotoTest extends LocalDatastoreServiceTestConfigProvider{
      */
     @Test(expected=NumberFormatException.class)
     public void testSetMillionInstructionsPerSecond() {
-	valuesSetPhoto.setMillionInstructionsPerSecond(1337);
-	assertEquals(1337, valuesSetPhoto.getMillionInstructionsPerSecond());
-	valuesSetPhoto.setMillionInstructionsPerSecond(-1);
+	valuesSetPhoto.getMainframe().setMillionInstructionsPerSecond(1337);
+	assertEquals(1337, valuesSetPhoto.getMainframe().getMillionInstructionsPerSecond());
+	valuesSetPhoto.getMainframe().setMillionInstructionsPerSecond(-1);
 	fail("negative values should be permitted");
     }
 
@@ -93,14 +96,8 @@ public class MainframePhotoTest extends LocalDatastoreServiceTestConfigProvider{
      */
     @Test
     public void testGetManufacturer() {
-	assertEquals("example_manufacturer", defaultValuePhoto.getManufacturer());
-	assertEquals("WahlZeit", valuesSetPhoto.getManufacturer());
-	
-	defaultValuePhoto.setManufacturer("IBM");
-	valuesSetPhoto.setManufacturer("GREYSCALE");
-	
-	assertEquals("IBM",defaultValuePhoto.getManufacturer());
-	assertEquals("GREYSCALE",valuesSetPhoto.getManufacturer());
+	assertEquals("default_manufacturer", defaultValuePhoto.getMainframe().getMainframeType().getManufacturer());
+	assertEquals("WahlZeit", valuesSetPhoto.getMainframe().getMainframeType().getManufacturer());
     }
 
     /**
@@ -108,8 +105,11 @@ public class MainframePhotoTest extends LocalDatastoreServiceTestConfigProvider{
      */
     @Test(expected=IllegalArgumentException.class)
     public void testSetManufacturer() {
-	defaultValuePhoto.setManufacturer("Google Inc.");
-	valuesSetPhoto.setManufacturer("");
+	MainframeType mt = MainframeManager.getInstance().createMainframeType("Google Inc.");
+	defaultValuePhoto.getMainframe().getModel();
+	
+	
+	mt = MainframeManager.getInstance().createMainframeType("");
 	fail("empty string should throw an exception");
     }
 }
