@@ -30,14 +30,15 @@ import java.util.Objects;
 
 import org.wahlzeit.services.DataObject;
 
+import com.googlecode.objectify.annotation.Container;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
 @Entity
 public class Mainframe extends DataObject {
-    @Id
-    protected Long idLong;
-        
+    @Id Long id;
+    
+    @Container
     private MainframeType mainframeType;
     
     protected int millionInstructionsPerSecond = 1;
@@ -47,8 +48,9 @@ public class Mainframe extends DataObject {
      * 
      * @methodtype cosntructor
      */
-    public Mainframe(MainframeType mainframeType) {
+    private Mainframe(MainframeType mainframeType) {
 	this.mainframeType = mainframeType;
+	incWriteCount();
     }
     
     /**
@@ -59,6 +61,7 @@ public class Mainframe extends DataObject {
 	this.mainframeType = mainframeType;
 	this.model = model;
 	this.millionInstructionsPerSecond = millionInstructionsPerSecond;
+	incWriteCount();
     }
 
     private void assertIsNotNull(Object obj) {
@@ -111,7 +114,7 @@ public class Mainframe extends DataObject {
      */
     @Override
     public int hashCode() {
-	return Objects.hash(this.model, this.millionInstructionsPerSecond, this.mainframeType);
+	return Objects.hash(this.mainframeType,id);
     }
 
     /**
@@ -121,6 +124,7 @@ public class Mainframe extends DataObject {
 	assertIsNotNull(millionInstructionsPerSecond);
 	assertIsValidInt(millionInstructionsPerSecond);
 	this.millionInstructionsPerSecond = millionInstructionsPerSecond;
+	incWriteCount();
     }
     
     /**
@@ -132,6 +136,7 @@ public class Mainframe extends DataObject {
 	    throw new IllegalArgumentException("Modelname must not be empty");
 	}
         this.model = model;
+        incWriteCount();
     }
     
     /* (non-Javadoc)

@@ -49,6 +49,7 @@ public class MainframePhotoFactoryTest extends LocalDatastoreServiceTestConfigPr
     @Before
     public void SetUp() throws Throwable {
 	this.before();
+	MainframeManager.setUseDatastore(false);
     }
 
     /**

@@ -51,6 +51,7 @@ public class MainframePhotoTest extends LocalDatastoreServiceTestConfigProvider{
     @Before
     public void setUp() throws Throwable {
 	super.before();
+	MainframeManager.setUseDatastore(false);
 	defaultValuePhoto = new MainframePhoto();
 	notInitalisedPhoto = null;
 	valuesSetPhoto = new MainframePhoto(10, "WahlZeit", "WahlZeitModel");

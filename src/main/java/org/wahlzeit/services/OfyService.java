@@ -9,7 +9,9 @@ import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoCase;
 import org.wahlzeit.model.Tag;
 import org.wahlzeit.model.User;
+import org.wahlzeit.model.mainframe.Mainframe;
 import org.wahlzeit.model.mainframe.MainframePhoto;
+import org.wahlzeit.model.mainframe.MainframeType;
 import org.wahlzeit.model.persistence.DatastoreAdapter.ImageWrapper;
 
 import com.googlecode.objectify.Objectify;
@@ -38,6 +40,8 @@ public class OfyService {
 		factory().register(Guest.class);
 		factory().register(PhotoCase.class);
 		factory().register(ImageWrapper.class);
+		factory().register(MainframeType.class);
+		factory().register(Mainframe.class);
 	}
 
 	public static Objectify ofy() {

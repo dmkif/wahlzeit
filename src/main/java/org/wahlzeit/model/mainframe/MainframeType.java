@@ -31,17 +31,27 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.wahlzeit.services.DataObject;
+import org.wahlzeit.services.ObjectManager;
 
+import com.google.appengine.api.datastore.Key;
+import com.googlecode.objectify.annotation.Container;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
+import com.googlecode.objectify.annotation.Parent;
 
 @Entity
 public class MainframeType extends DataObject {
     
     @Id
     protected Long idLong;
+    @Parent
+    protected Key parent = ObjectManager.applicationRootKey;
 
+    @Ignore
     protected MainframeType superType = null;
+    
+    @Container
     protected Set<MainframeType> subTypes = new HashSet<>();
 
     private String manufacturer;
@@ -51,6 +61,7 @@ public class MainframeType extends DataObject {
      */
     public MainframeType(String manufacturer) {
 	this.manufacturer = manufacturer;
+	incWriteCount();
     }
     
     /**
@@ -89,8 +100,8 @@ public class MainframeType extends DataObject {
      * @Methodtype command
      */
     public void setSuperType(MainframeType mainframeType) {
-	this.superType = mainframeType;
-	
+	this.superType = mainframeType;	
+	incWriteCount();
     }
 
     /**
@@ -98,7 +109,7 @@ public class MainframeType extends DataObject {
      * @Methodtype factory
      */
     public Mainframe createInstance() {
-	return new Mainframe(this);
+	return new Mainframe(this, "example_model", 1);
     }
 
     /**

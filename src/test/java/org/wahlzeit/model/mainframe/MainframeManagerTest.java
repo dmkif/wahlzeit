@@ -1,6 +1,6 @@
 package org.wahlzeit.model.mainframe;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +12,8 @@ public class MainframeManagerTest extends LocalDatastoreServiceTestConfigProvide
     @Before
     public void setUp() throws Throwable {
 	super.before();
-	mm = MainframeManager.getInstance();
+	MainframeManager.setUseDatastore(false);
+        mm = MainframeManager.getInstance();
     }
 
     @Test

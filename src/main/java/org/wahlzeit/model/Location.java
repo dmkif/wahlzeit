@@ -27,14 +27,22 @@ package org.wahlzeit.model;
 
 import java.util.Objects;
 
+import org.wahlzeit.model.coordinate.CartesianCoordinate;
 import org.wahlzeit.model.coordinate.Coordinate;
+import org.wahlzeit.services.DataObject;
+import org.wahlzeit.services.ObjectManager;
 
-public class Location {
+import com.google.appengine.api.datastore.Key;
+import com.googlecode.objectify.annotation.Parent;
+
+public class Location extends DataObject{
+    @Parent
+    protected Key parent = ObjectManager.applicationRootKey;
 
     private Coordinate coordinate;
 
     public Location() {
-	//setCoordinate((Coordinate) new CartesianCoordinate());
+	setCoordinate(CartesianCoordinate.getInstance(0, 0, 0));
     }
 
     public Location(Coordinate coordinate) {
@@ -74,6 +82,7 @@ public class Location {
 	} else {
 	    this.coordinate = null;
 	}
+	incWriteCount();
     }
 
 }

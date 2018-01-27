@@ -12,6 +12,7 @@ public class MainframeTest extends LocalDatastoreServiceTestConfigProvider{
     @Before
     public void setUp() throws Throwable {
 	super.before();
+	MainframeManager.setUseDatastore(false);
 	mainframe = MainframeManager.getInstance().createMainframe("ibm", "z14", 1337);
     }
 

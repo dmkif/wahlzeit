@@ -7,7 +7,7 @@
  *
  * Class: MainframeManager
  *
- * This file is part of the Wahlzeit photo rating application.
+ * This file is part of the Wahlzeit MainframeType rating application.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -25,22 +25,36 @@
  */
 package org.wahlzeit.model.mainframe;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
+import org.wahlzeit.model.GlobalsManager;
+import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.services.ObjectManager;
+
+import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.Work;
 
 /**
  * @author dmkif
  *
  */
 public class MainframeManager extends ObjectManager{
+    
+    private static final Logger log = Logger.getLogger(MainframeManager.class.getName());
+    public static boolean useDatastore = true;
 
     private static HashMap<Integer, Mainframe> mainframeMap = new HashMap<>();
     private static HashMap<String, MainframeType> mainframeTypeMap = new HashMap<>();
     private static MainframeManager instance = new MainframeManager();
     
     private MainframeManager() {
-	
+	if(useDatastore) {
+	    loadMainframeTypes();
+	    loadMainframes();
+	}
     }
 
     public synchronized static MainframeManager getInstance() {
@@ -55,7 +69,11 @@ public class MainframeManager extends ObjectManager{
 	//TODO add assert
 	MainframeType mt = getInstance().getMainframeType(manufacturer);
 	Mainframe result = mt.createInstance();
-	mainframeMap.put(result.hashCode(), result);
+	if(useDatastore) {
+	    writeObject(result);
+	    GlobalsManager.getInstance().saveGlobals();
+	}
+	doAddMainframe(result);
 	
 	return result;
     }
@@ -76,18 +94,108 @@ public class MainframeManager extends ObjectManager{
 	if(manufacturer==null || manufacturer.isEmpty()){
 	    throw new IllegalArgumentException("manufacturer must not be null or empty");
 	}
-	if(!mainframeTypeMap.containsKey(manufacturer)) {
+	
+	return doCreateMainframeType(manufacturer);
+    }
+    
+    public MainframeType doCreateMainframeType(String manufacturer) {
+	if(!doHasMainframeType(manufacturer)) {
 		MainframeType mainframeType =  new MainframeType(manufacturer);
-		mainframeTypeMap.put(manufacturer, mainframeType);
+		if(MainframeManager.useDatastore) {
+		    writeObject(mainframeType);
+		    GlobalsManager.getInstance().saveGlobals();
+		}
+		doAddMainframeType(mainframeType);
+		log.config(LogBuilder.createSystemMessage().addParameter("Added new Mainframe:", mainframeType.getManufacturer()).toString());
 	}
 	
 	return mainframeTypeMap.get(manufacturer);
     }
     
     public synchronized MainframeType getMainframeType(String typeName) {
-	if(!mainframeTypeMap.containsKey(typeName)) {
+	if(!doHasMainframeType(typeName)) {
 	    this.createMainframeType(typeName);
 	}
 	return mainframeTypeMap.get(typeName);
     }
+    
+	/**
+	 * @methodtype command
+	 *
+	 * Load all persisted MainframeTypes. Executed when Wahlzeit is restarted.
+	 */
+	public void loadMainframeTypes() {
+		Collection<MainframeType> existingMainframeTypes = ObjectifyService.run(new Work<Collection<MainframeType>>() {
+			@Override
+			public Collection<MainframeType> run() {
+				Collection<MainframeType> existingMainframeTypes = new ArrayList<MainframeType>();
+				readObjects(existingMainframeTypes, MainframeType.class);
+				return existingMainframeTypes;
+			}
+		});
+
+		for (MainframeType mainframeType : existingMainframeTypes) {
+			if (!doHasMainframeType(mainframeType.getManufacturer())) {
+				log.config(LogBuilder.createSystemMessage().
+						addParameter("Load MainframeType with Name", mainframeType.getManufacturer()).toString());
+				doAddMainframeType(mainframeType);
+			} else {
+				log.config(LogBuilder.createSystemMessage().
+						addParameter("Already loaded MainframeType",mainframeType.getManufacturer()).toString());
+			}
+		}
+
+		log.info(LogBuilder.createSystemMessage().addMessage("All MainframeTypes loaded.").toString());
+	}
+	
+	private void doAddMainframeType(MainframeType type)
+	{
+	    mainframeTypeMap.put(type.getManufacturer(), type);
+	}
+	
+	private boolean doHasMainframeType(String manufacturer) {
+	    return mainframeTypeMap.containsKey(manufacturer);
+	}
+	
+	/**
+	 * @methodtype command
+	 *
+	 * Load all persisted MainframeTypes. Executed when Wahlzeit is restarted.
+	 */
+	public void loadMainframes() {
+		Collection<Mainframe> existingMainframes = ObjectifyService.run(new Work<Collection<Mainframe>>() {
+			@Override
+			public Collection<Mainframe> run() {
+				Collection<Mainframe> existingMainframes = new ArrayList<Mainframe>();
+				readObjects(existingMainframes, Mainframe.class);
+				return existingMainframes;
+			}
+		});
+
+		for (Mainframe mainframe : existingMainframes) {
+			if (!doHasMainframe(mainframe.hashCode())) {
+				log.config(LogBuilder.createSystemMessage().
+						addParameter("Load Mainframe with Name", mainframe.toString()).toString());
+				doAddMainframe(mainframe);
+			} else {
+				log.config(LogBuilder.createSystemMessage().
+						addParameter("Already loaded Mainframe",mainframe.toString()).toString());
+			}
+		}
+
+		log.info(LogBuilder.createSystemMessage().addMessage("All Mainframes loaded.").toString());
+	}
+	
+	private void doAddMainframe(Mainframe value)
+	{
+	    mainframeMap.put(value.hashCode(), value);
+	}
+	
+	private boolean doHasMainframe(int id) {
+	    return mainframeTypeMap.containsKey(id);
+	}
+	
+	public static void setUseDatastore(boolean value) {
+	    useDatastore = value;
+	}
 }

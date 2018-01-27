@@ -30,6 +30,7 @@ import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoId;
 
 import com.googlecode.objectify.annotation.Container;
+import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Subclass;
 
 /**
@@ -38,8 +39,7 @@ import com.googlecode.objectify.annotation.Subclass;
  */
 @Subclass
 public class MainframePhoto extends Photo {
-
-    @Container
+    
     private Mainframe mainframe;
 
     /**
